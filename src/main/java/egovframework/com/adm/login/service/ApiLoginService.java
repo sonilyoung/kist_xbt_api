@@ -1,9 +1,9 @@
-package egovframework.com.api.edc.service;
+package egovframework.com.adm.login.service;
 
-import java.io.IOException;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
-import egovframework.com.api.edc.vo.UnitImages;
+import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.adm.login.vo.LoginRequest;
 
 /**
  * 사용자관리에 관한 인터페이스클래스를 정의한다.
@@ -22,9 +22,10 @@ import egovframework.com.api.edc.vo.UnitImages;
  *
  *      </pre>
  */
-public interface EgovXtsEdcApiService {
-	
-	public Map<String, Object> selectEmpUnitImage(UnitImages params) throws Exception;
-	
+public interface ApiLoginService {
 
+    public String createToken(HttpServletRequest request, LoginRequest loginRequest);
+
+    public ApiLogin getLoginInfo(HttpServletRequest request);    
+	
 }

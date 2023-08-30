@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import egovframework.com.adm.login.service.LoginService;
-import egovframework.com.adm.login.vo.Login;
+import egovframework.com.adm.login.service.ApiLoginService;
+import egovframework.com.adm.login.vo.ApiLogin;
 import egovframework.com.global.exception.CustomBaseException;
 import egovframework.com.global.http.BaseResponseCode;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * 사용자 서비스
      */
     @Autowired
-    protected LoginService loginService;
+    protected ApiLoginService apiLoginService;
 
 	@Autowired
 	protected Environment env;
@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, CustomBaseException {
     	
-    	Login login = loginService.getLoginInfo(request);
+    	ApiLogin login = apiLoginService.getLoginInfo(request);
 		if (login == null) {
 			throw new CustomBaseException(BaseResponseCode.AUTH_ERROR);
 		}	

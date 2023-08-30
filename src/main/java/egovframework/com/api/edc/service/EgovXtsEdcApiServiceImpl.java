@@ -1,18 +1,11 @@
 package egovframework.com.api.edc.service;
 
-import java.io.IOException;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import egovframework.com.api.edc.dao.EgovXtsEdcApiDAO;
 import egovframework.com.api.edc.vo.UnitImages;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.OkHttpClient;
@@ -43,15 +36,6 @@ import okhttp3.Response;
 public class EgovXtsEdcApiServiceImpl implements EgovXtsEdcApiService {
 
 	private String empUrl = "http://127.0.0.1:8080/test/selectEmpUnitImage.do";
-	
-    @Resource(name = "EgovXtsEdcApiDAO")
-	private EgovXtsEdcApiDAO egovXtsEdcApiDAO;
-
-	@Override
-	public int saveEmpUnitImage(UnitImages params) throws IOException {
-		// TODO Auto-generated method stub
-		return egovXtsEdcApiDAO.saveEmpUnitImage(params);
-	}
 
 	
 	@Override

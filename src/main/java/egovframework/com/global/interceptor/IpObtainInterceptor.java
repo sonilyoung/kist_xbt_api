@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import egovframework.com.adm.login.vo.Login;
+import egovframework.com.adm.login.vo.ApiLogin;
 
 /**
  * 사용자IP 체크 인터셉터
@@ -32,7 +32,7 @@ public class IpObtainInterceptor extends HandlerInterceptorAdapter {
 
         String clientIp = request.getRemoteAddr();
 
-        Login Login = null;// (Login) OfficeUserInfoHelper.getAuthenticatedUser();
+        ApiLogin Login = null;// (Login) OfficeUserInfoHelper.getAuthenticatedUser();
 
         if (Login != null) {
             //Login.set(clientIp);

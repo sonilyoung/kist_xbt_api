@@ -21,24 +21,4 @@ import java.util.List;
  *      </pre>
  */
 public interface TestService {
-	public int insertXbtBagConstUnitTemp(LinkedHashMap<String, Object> params);
-	
-	public int insertXbtBagConstUnitReal(LinkedHashMap<String, Object> params);
-	
-	public int insertXbtBagInfoTemp(LinkedHashMap<String, Object> params);
-	
-	public int insertUnitTemp(LinkedHashMap<String, Object> params);
-	
-	
-	public int insertXbtBagConstUnitRename(LinkedHashMap<String, Object> params);
-	
-	public int insertXbtBagInfoRename(LinkedHashMap<String, Object> params);
-	
-	public int insertUnitRename(LinkedHashMap<String, Object> params);
-	
-	public int insertTheoryExcel(LinkedHashMap<String, Object> params);
-	
-	public List<LinkedHashMap<String, Object>> selectXrayBagData(LinkedHashMap<String, Object> params);
-	
-	public int updateXrayBagData(LinkedHashMap<String, Object> params);
 }

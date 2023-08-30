@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
-import egovframework.com.adm.login.vo.Login;
+import egovframework.com.adm.login.vo.ApiLogin;
 import egovframework.com.global.common.Globals;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.common.vo.FileVO;
@@ -47,7 +47,7 @@ public class PathUtil implements InitializingBean {
     }
 
     public static String getBaseDirWithCompanyID() {
-        Login Login = null;// (Login) OfficeUserInfoHelper.getAuthenticatedUser();
+        ApiLogin Login = null;// (Login) OfficeUserInfoHelper.getAuthenticatedUser();
         if (Login == null) {
             return baseDir;
         } else {

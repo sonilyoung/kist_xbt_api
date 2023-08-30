@@ -8,12 +8,5 @@ import egovframework.com.api.edc.vo.AiForceUserScore;
 
 public interface EgovXtsEdcReinforcementService {
 	
-	//public boolean reinforcementLearningAi() throws Exception;
-	
-	public List<AiForceLearning> selectLearningList(AiForceLearning params);
-	
-	public List<AiForceLearningResult> selectLearningResultList(AiForceLearningResult params);
-	
-	public List<AiForceUserScore> selectUserScoreResultList(AiForceUserScore params);
 	
 }

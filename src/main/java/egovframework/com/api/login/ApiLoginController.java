@@ -47,8 +47,8 @@ public class ApiLoginController {
             throw new CustomBaseException(BaseResponseCode.INPUT_CHECK_ERROR,
                     new String[] {"loginId", "로그인 아이디"});
         }
-        String token = apiLoginService.createToken(request, loginRequest);
-        if (token == null) {
+        ApiLogin login = apiLoginService.createToken(request);
+        if (login.getAccessToken() == null) {
             throw new CustomBaseException(BaseResponseCode.AUTH_ERROR, "");
         }
         
@@ -58,7 +58,7 @@ public class ApiLoginController {
         // 로그인 시간 업데이트 
         //loginService.updateLoginTime(loginRequest.getLoginId());
         
-        return new BaseResponse<TokenResponse>(new TokenResponse(token, "bearer"));
+        return new BaseResponse<TokenResponse>(new TokenResponse(login.getAccessToken(), "bearer"));
     }
     
     

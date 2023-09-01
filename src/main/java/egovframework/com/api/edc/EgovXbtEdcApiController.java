@@ -22,12 +22,15 @@ import egovframework.com.api.edc.service.EgovXtsEdcApiService;
 import egovframework.com.api.edc.service.EgovXtsEdcPseudoFilterService;
 import egovframework.com.api.edc.service.EgovXtsEdcReinforcementService;
 import egovframework.com.api.edc.service.EgovXtsEdcThreeDimensionService;
+import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.api.login.service.ApiLoginService;
 import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.global.annotation.SkipAuth;
 import egovframework.com.global.authorization.SkipAuthLevel;
 import egovframework.com.global.http.BaseResponse;
+import egovframework.com.global.http.BaseResponseCode;
 import io.swagger.annotations.Api;
+import egovframework.com.global.http.exception.BaseException;
 
 @Controller
 @RequestMapping("/kist/api")
@@ -53,27 +56,27 @@ public class EgovXbtEdcApiController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value = {"/kistSudoImgUpload.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@RequestMapping(value = {"/transImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
-	public BaseResponse<JsonNode> kistSudoImgUpload(@RequestBody final LinkedHashMap<String, Object> linkedHashMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public BaseResponse<Integer> transImages(HttpServletRequest request, HttpServletResponse response, @RequestBody XrayImgContents params) throws Exception {
 		
         ApiLogin login = apiLoginService.getLoginInfo(request);
-        
-		
-		LOGGER.info("imgUpload : " + login);
-		
-		
-		long testTime = System.currentTimeMillis();
-		JsonNode jsonNode = null;
-		HashMap<String, Object> hash = new HashMap<String, Object>();//리턴 객체 생성
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			
-		} catch(Exception e) {
-			e.printStackTrace();
+        LOGGER.info("login : " + login);
+		if (login == null) {
+			throw new BaseException(BaseResponseCode.AUTH_FAIL);
 		}
-		LOGGER.info("End Current Time : " + (System.currentTimeMillis() - testTime ) + "ms");
-		return new BaseResponse<JsonNode>(jsonNode);
+		
+		LOGGER.info("params : " + params);
+		
+		/*
+		 * 
+		 * long testTime = System.currentTimeMillis(); JsonNode jsonNode = null;
+		 * HashMap<String, Object> hash = new HashMap<String, Object>();//리턴 객체 생성
+		 * ObjectMapper mapper = new ObjectMapper(); try {
+		 * 
+		 * } catch(Exception e) { e.printStackTrace(); }
+		 */
+		return new BaseResponse<Integer>(BaseResponseCode.SAVE_SUCCESS, BaseResponseCode.SAVE_SUCCESS.getMessage());
 	}	
 	
 	

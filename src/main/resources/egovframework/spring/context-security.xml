@@ -26,8 +26,7 @@
 	<mvc:interceptors>
  		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/adm/login.do"/>
-			<mvc:exclude-mapping path="/stu/login.do"/>
+			<mvc:exclude-mapping path="/api/login.do"/>
 			<mvc:exclude-mapping path="/v2/api-docs"/>
 			<mvc:exclude-mapping path="/swagger-resources/**"/>
 			<mvc:exclude-mapping path="/swagger-ui.html"/>

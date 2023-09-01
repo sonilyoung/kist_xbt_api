@@ -1,4 +1,4 @@
-package egovframework.com.adm.login.service;
+package egovframework.com.api.login.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import egovframework.com.adm.login.vo.ApiLogin;
-import egovframework.com.adm.login.vo.LoginRequest;
+import egovframework.com.api.login.vo.ApiLogin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -37,7 +36,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  *
  *      </pre>
  */
-@Service("loginService")
+@Service("apiLoginService")
 public class ApiLoginServiceImpl implements ApiLoginService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiLoginServiceImpl.class);
@@ -45,12 +44,12 @@ public class ApiLoginServiceImpl implements ApiLoginService {
     private static final long validityInMilliseconds = 3600000 * 24;
     private static final String CLIENT_ID = "kist_xbt_api1";
 
-    public String createToken(HttpServletRequest request, LoginRequest loginRequest) {
+    public String createToken(HttpServletRequest request, ApiLogin loginRequest) {
         ApiLogin login = new ApiLogin();
         String tokenStr = null;
 
         LOGGER.debug("loginRequest.getLoginId()    ]" + loginRequest.getLoginId() + "[");
-        login.setUserId(CLIENT_ID);
+        login.setLoginId(CLIENT_ID);
 
         try {
             tokenStr = toString(login);
@@ -92,14 +91,14 @@ public class ApiLoginServiceImpl implements ApiLoginService {
 
     private String toString(ApiLogin login) throws Exception {
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String str = login.getUserId() + "|" + df; 
+        String str = login.getLoginId() + "|" + df; 
         return str;
     }
 
     private ApiLogin toVo(String str) throws Exception {
         ApiLogin login = new ApiLogin();
         String strSplit[] = StringUtils.split(str, '|');
-        login.setUserId(strSplit[0]);
+        login.setLoginId(strSplit[0]);
         login.setRegDt(strSplit[1]);
         return login;
     }

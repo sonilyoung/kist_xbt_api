@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import egovframework.com.adm.login.service.ApiLoginService;
-import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.api.login.service.ApiLoginService;
+import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.global.exception.CustomBaseException;
 import egovframework.com.global.http.BaseResponseCode;
 import lombok.extern.slf4j.Slf4j;

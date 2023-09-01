@@ -1,9 +1,8 @@
-package egovframework.com.adm.login.service;
+package egovframework.com.api.login.service;
 
 import javax.servlet.http.HttpServletRequest;
 
-import egovframework.com.adm.login.vo.ApiLogin;
-import egovframework.com.adm.login.vo.LoginRequest;
+import egovframework.com.api.login.vo.ApiLogin;
 
 /**
  * 사용자관리에 관한 인터페이스클래스를 정의한다.
@@ -24,7 +23,7 @@ import egovframework.com.adm.login.vo.LoginRequest;
  */
 public interface ApiLoginService {
 
-    public String createToken(HttpServletRequest request, LoginRequest loginRequest);
+    public String createToken(HttpServletRequest request, ApiLogin loginRequest);
 
     public ApiLogin getLoginInfo(HttpServletRequest request);    
 	

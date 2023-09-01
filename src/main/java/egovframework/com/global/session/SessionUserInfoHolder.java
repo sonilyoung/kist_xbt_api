@@ -1,6 +1,6 @@
 package egovframework.com.global.session;
 
-import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.api.login.vo.ApiLogin;
 
 /**
  * 현재 실행중인 Thread 에 인증된 사용자 정보를 담아 사용하기 위한 클래스

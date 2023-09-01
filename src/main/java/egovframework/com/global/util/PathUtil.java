@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
-import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.global.common.Globals;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.common.vo.FileVO;

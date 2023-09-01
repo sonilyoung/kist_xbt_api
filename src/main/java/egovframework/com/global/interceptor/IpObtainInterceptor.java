@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.api.login.vo.ApiLogin;
 
 /**
  * 사용자IP 체크 인터셉터

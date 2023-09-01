@@ -9,8 +9,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import egovframework.com.adm.login.service.ApiLoginService;
-import egovframework.com.adm.login.vo.ApiLogin;
+import egovframework.com.api.login.service.ApiLoginService;
+import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.global.annotation.SkipAuth;
 import egovframework.com.global.authorization.SkipAuthLevel;
 import egovframework.com.global.exception.CustomBaseException;
@@ -50,7 +50,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 인증(로그인) 체크
         ApiLogin login = apiLoginService.getLoginInfo(request);
-        if (login == null || !StringUtils.hasText(login.getUserId())) {
+        if (login == null || !StringUtils.hasText(login.getLoginId())) {
             throw new CustomBaseException(BaseResponseCode.AUTH_FAIL);
         }
 

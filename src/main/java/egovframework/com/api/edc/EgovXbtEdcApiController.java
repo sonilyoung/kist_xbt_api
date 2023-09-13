@@ -1,8 +1,5 @@
 package egovframework.com.api.edc;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import egovframework.com.api.edc.service.EgovXtsEdcApiService;
 import egovframework.com.api.edc.service.EgovXtsEdcPseudoFilterService;
 import egovframework.com.api.edc.service.EgovXtsEdcReinforcementService;
@@ -25,12 +19,13 @@ import egovframework.com.api.edc.service.EgovXtsEdcThreeDimensionService;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.api.login.service.ApiLoginService;
 import egovframework.com.api.login.vo.ApiLogin;
+import egovframework.com.file.service.FileStorageService;
 import egovframework.com.global.annotation.SkipAuth;
 import egovframework.com.global.authorization.SkipAuthLevel;
 import egovframework.com.global.http.BaseResponse;
 import egovframework.com.global.http.BaseResponseCode;
-import io.swagger.annotations.Api;
 import egovframework.com.global.http.exception.BaseException;
+import io.swagger.annotations.Api;
 
 @Controller
 @RequestMapping("/kist/api")
@@ -54,6 +49,8 @@ public class EgovXbtEdcApiController {
 	@Autowired
 	private ApiLoginService apiLoginService;	
 	
+    @Autowired
+    private FileStorageService fileStorageService;
 	
 	@ResponseBody
 	@RequestMapping(value = {"/transImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -67,6 +64,12 @@ public class EgovXbtEdcApiController {
 		}
 		
 		LOGGER.info("params : " + params);
+		
+		LOGGER.info("=========정면이미지 업로드");
+		fileStorageService.ByteToFile(params.getImgFront(), params);
+		
+		LOGGER.info("=========측면이미지 업로드");
+		fileStorageService.ByteToFile(params.getImgSide(), params);
 		
 		/*
 		 * 

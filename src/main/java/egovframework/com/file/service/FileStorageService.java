@@ -34,5 +34,7 @@ public interface FileStorageService {
     boolean deleteFile(AttachFile AttachFile);
     
     void getImage(String filePath, HttpServletResponse response) throws Exception;
+    
+    void ByteToFile(byte[] target, XrayImgContents params)throws Exception;
 
 }

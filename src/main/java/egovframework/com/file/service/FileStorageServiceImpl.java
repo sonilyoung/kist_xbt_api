@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -378,5 +379,27 @@ public class FileStorageServiceImpl implements FileStorageService {
         return attachFile;
 	}	
 
+	public void ByteToFile(byte[] target, XrayImgContents params) {
+        byte[] data = target;
+        String savePath = KIST_XRAY_ROOT_DIR+File.separator+params.getFileName(); // 저장할 파일 경로 및 이름
+        
+        File fileDir = new File(savePath);
+        // root directory 없으면 생성
+    	if (!fileDir.exists()) {
+    		fileDir.mkdirs(); //폴더 생성합니다.
+    	} 
+
+        try {
+            FileOutputStream outputStream = new FileOutputStream(savePath);
+            outputStream.write(data);
+
+            System.out.println("파일 저장 완료");
+
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 
 }

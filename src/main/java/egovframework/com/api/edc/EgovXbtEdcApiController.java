@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,12 +66,31 @@ public class EgovXbtEdcApiController {
 		
 		LOGGER.info("params : " + params);
 		
-		LOGGER.info("=========정면이미지 업로드");
-		fileStorageService.ByteToFile(params.getImgFront(), params);
+		//JsonNode json = null;
+		//ObjectMapper mapper = new ObjectMapper();
 		
-		LOGGER.info("=========측면이미지 업로드");
-		fileStorageService.ByteToFile(params.getImgSide(), params);
-		
+		try {
+			LOGGER.info("=========정면이미지 업로드");
+			if(!StringUtils.isEmpty(params.getImgFront())){
+				fileStorageService.ByteToFile(params.getImgFront(), params.getImgFrontName());
+			}
+			
+			LOGGER.info("=========측면이미지 업로드");
+			if(!StringUtils.isEmpty(params.getImgSide())){
+				fileStorageService.ByteToFile(params.getImgSide(), params.getImgSideName());
+			}		
+			
+			return new BaseResponse<Integer>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage());
+			
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<Integer>(BaseResponseCode.UPLOAD_FAIL, BaseResponseCode.UPLOAD_FAIL.getMessage());
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}
+
 		/*
 		 * 
 		 * long testTime = System.currentTimeMillis(); JsonNode jsonNode = null;
@@ -79,7 +99,7 @@ public class EgovXbtEdcApiController {
 		 * 
 		 * } catch(Exception e) { e.printStackTrace(); }
 		 */
-		return new BaseResponse<Integer>(BaseResponseCode.SAVE_SUCCESS, BaseResponseCode.SAVE_SUCCESS.getMessage());
+		
 	}	
 	
 	

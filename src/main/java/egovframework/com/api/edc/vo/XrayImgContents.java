@@ -104,5 +104,7 @@ public class XrayImgContents{
 	private String updateDate;
 	private String command;
 	private String fileName;
+	private String imgFrontName;
+	private String imgSideName;
 	
 }

@@ -379,10 +379,9 @@ public class FileStorageServiceImpl implements FileStorageService {
         return attachFile;
 	}	
 
-	public void ByteToFile(byte[] target, XrayImgContents params) {
-        byte[] data = target;
-        String savePath = KIST_XRAY_ROOT_DIR+File.separator+params.getFileName(); // 저장할 파일 경로 및 이름
-        
+	public void ByteToFile(byte[] target, String params) {
+        String savePath = KIST_XRAY_ROOT_DIR; // 저장할 파일 경로 및 이름
+        String targetFile = params;
         File fileDir = new File(savePath);
         // root directory 없으면 생성
     	if (!fileDir.exists()) {
@@ -390,12 +389,12 @@ public class FileStorageServiceImpl implements FileStorageService {
     	} 
 
         try {
-            FileOutputStream outputStream = new FileOutputStream(savePath);
-            outputStream.write(data);
-
-            System.out.println("파일 저장 완료");
-
-            outputStream.close();
+            
+            File lOutFile = new File(savePath+File.separator+targetFile);
+            FileOutputStream outputStream = new FileOutputStream(lOutFile);
+            outputStream.write(target);
+            outputStream.close();            
+            System.out.println("파일 저장 완료");            		
         } catch (IOException e) {
             e.printStackTrace();
         }

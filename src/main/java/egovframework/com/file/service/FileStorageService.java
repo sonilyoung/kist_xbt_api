@@ -35,6 +35,6 @@ public interface FileStorageService {
     
     void getImage(String filePath, HttpServletResponse response) throws Exception;
     
-    void ByteToFile(byte[] target, XrayImgContents params)throws Exception;
+    void ByteToFile(byte[] target, String params)throws Exception;
 
 }

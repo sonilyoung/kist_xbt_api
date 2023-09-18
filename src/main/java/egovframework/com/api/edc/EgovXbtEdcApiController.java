@@ -29,7 +29,7 @@ import egovframework.com.global.http.exception.BaseException;
 import io.swagger.annotations.Api;
 
 @Controller
-@RequestMapping("/kist/api")
+@RequestMapping("/kaist/api")
 @Api(tags = "XBT external API")
 public class EgovXbtEdcApiController {
 	
@@ -70,6 +70,10 @@ public class EgovXbtEdcApiController {
 		//ObjectMapper mapper = new ObjectMapper();
 		
 		try {
+			LOGGER.info("=========파링생성 디렉토리의 파일삭제");
+			fileStorageService.fileDeleteAll();
+			
+			
 			LOGGER.info("=========정면이미지 업로드");
 			if(!StringUtils.isEmpty(params.getImgFront())){
 				fileStorageService.ByteToFile(params.getImgFront(), params.getImgFrontName());

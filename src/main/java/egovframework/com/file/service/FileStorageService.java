@@ -25,7 +25,7 @@ public interface FileStorageService {
 	
 	AttachFile createXrayImageFiles(String targetName, String fileNameWithoutExtension, XrayImgContents params,MultipartFile file) throws Exception;
 	
-	AttachFile createKistXrayImageFiles(String targetName, String fileNameWithoutExtension, XrayImgContents params, MultipartFile file) throws Exception;
+	AttachFile createKaistXrayImageFiles(String targetName, String fileNameWithoutExtension, XrayImgContents params, MultipartFile file) throws Exception;
 		
     File getFile(AttachFile AttachFile);
 
@@ -36,5 +36,7 @@ public interface FileStorageService {
     void getImage(String filePath, HttpServletResponse response) throws Exception;
     
     void ByteToFile(byte[] target, String params)throws Exception;
+    
+    public void fileDeleteAll()throws Exception;
 
 }

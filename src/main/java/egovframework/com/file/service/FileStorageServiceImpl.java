@@ -51,17 +51,17 @@ public class FileStorageServiceImpl implements FileStorageService {
     /*xray 저장경로*/
     public static final String XRAY_ROOT_DIR = GlobalsProperties.getProperty("xray.img.path");
     
-    /*이론 저장경로*/
-    public static final String THEORY_ROOT_DIR = GlobalsProperties.getProperty("theory.img.path");
-    
     /*파일업로드 저장경로*/
     public static final String FILE_UPLOAD_PATH = GlobalsProperties.getProperty("file.upload.path");
     
     /*파일업로드 저장경로*/
     public static final String FILE_DB_UPLOAD_PATH = GlobalsProperties.getProperty("file.db.upload.path");
     
-    /*kist xray 저장경로*/
-    public static final String KIST_XRAY_ROOT_DIR = GlobalsProperties.getProperty("kist.xray.img.path");    
+    /*kaist xray 저장경로*/
+    public static final String KAIST_XRAY_ROOT_DIR = GlobalsProperties.getProperty("kaist.xray.img.path");    
+    
+    /*kist xray 결과경로*/
+    public static final String KIST_XRAY_RESULT_DIR = GlobalsProperties.getProperty("kist.xray.result.img.path");            
     
     @PostConstruct
     public void initialize() {
@@ -333,7 +333,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	}
 
 	@Override
-	public AttachFile createKistXrayImageFiles(String targetName, String fileNameWithoutExtension, XrayImgContents params, MultipartFile file) throws Exception {
+	public AttachFile createKaistXrayImageFiles(String targetName, String fileNameWithoutExtension, XrayImgContents params, MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub
         AttachFile attachFile = null;
         File newFile = null;
@@ -342,7 +342,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         //String fileExtension = StringUtils.getFilenameExtension(originalFileName);
         String fileExtension = "jpg";
         
-        String filePath = KIST_XRAY_ROOT_DIR;
+        String filePath = KAIST_XRAY_ROOT_DIR;
         
         File fileDir = new File(filePath);
         // root directory 없으면 생성
@@ -380,7 +380,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	}	
 
 	public void ByteToFile(byte[] target, String params) {
-        String savePath = KIST_XRAY_ROOT_DIR; // 저장할 파일 경로 및 이름
+        String savePath = KAIST_XRAY_ROOT_DIR; // 저장할 파일 경로 및 이름
         String targetFile = params;
         File fileDir = new File(savePath);
         // root directory 없으면 생성
@@ -398,6 +398,21 @@ public class FileStorageServiceImpl implements FileStorageService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	}
+	
+	public void fileDeleteAll() {
+	    String directoryPath = "경로/디렉토리";  // 삭제할 디렉토리 경로
+
+	    File directory = new File(directoryPath);
+	    File[] files = directory.listFiles();  // 디렉토리 내의 모든 파일을 가져옵니다.
+
+	    if (files != null) {
+	        for (File file : files) {
+	            if (file.isFile()) {
+	                file.delete();  // 파일 삭제
+	            }
+	        }
+	    }		
 	}
 	
 

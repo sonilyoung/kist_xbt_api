@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiParam;
  */
 
 @RestController
-@RequestMapping("/kist/api")
+@RequestMapping("/kaist/api")
 @Api(tags = "Login Management API")
 public class ApiLoginController {
 

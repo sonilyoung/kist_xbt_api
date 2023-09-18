@@ -29,7 +29,7 @@ import egovframework.com.global.http.exception.BaseException;
 import io.swagger.annotations.Api;
 
 @Controller
-@RequestMapping("/kist/api")
+@RequestMapping("/kaist/api")
 @Api(tags = "XBT external API")
 public class EgovXbtEdcApiController {
 	

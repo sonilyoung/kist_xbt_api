@@ -400,8 +400,14 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 	}
 	
-	public void fileDeleteAll(String target1, String target2) {
-	    String directoryPath = KAIST_XRAY_RESULT_DIR;  // 삭제할 디렉토리 경로
+	public void fileDeleteAll(String target1, String target2, String op) {
+	    String directoryPath = "";
+	    
+	    if("target".equals(op)) {
+	    	directoryPath = KAIST_XRAY_ROOT_DIR;  // 삭제할 디렉토리 경로
+	    }else {
+	    	directoryPath = KAIST_XRAY_RESULT_DIR;  // 삭제할 디렉토리 경로
+	    }
 
 	    File directory = new File(directoryPath);
 	    File[] files = directory.listFiles();  // 디렉토리 내의 모든 파일을 가져옵니다.

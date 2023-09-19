@@ -229,93 +229,94 @@ public class XbtImageServiceImpl implements XbtImageService {
         		fileByte = Files.readAllBytes(fileList[i].toPath());
         		Path file = Paths.get(fileList[i].toPath().toString());
         		
-        		if(fileList[i].getName().contains("101")) {//정면
+        		if(fileList[i].getName().contains("F-101")) {//정면
         			fileTargetName = "101";
-        		}else if(fileList[i].getName().contains("102")) {
+        		}else if(fileList[i].getName().contains("F-102")) {
         			fileTargetName = "102";
-        		}else if(fileList[i].getName().contains("103")) {
+        		}else if(fileList[i].getName().contains("F-103")) {
         			fileTargetName = "103";
-        		}else if(fileList[i].getName().contains("104")) {
+        		}else if(fileList[i].getName().contains("F-104")) {
         			fileTargetName = "104";
-        		}else if(fileList[i].getName().contains("105")) {
+        		}else if(fileList[i].getName().contains("F-105")) {
         			fileTargetName = "105";
-        		}else if(fileList[i].getName().contains("106")) {
+        		}else if(fileList[i].getName().contains("F-106")) {
         			fileTargetName = "106";
-        		}else if(fileList[i].getName().contains("107")) {
+        		}else if(fileList[i].getName().contains("F-107")) {
         			fileTargetName = "107";
-        		}else if(fileList[i].getName().contains("108")) {
+        		}else if(fileList[i].getName().contains("F-108")) {
         			fileTargetName = "108";
-        		}else if(fileList[i].getName().contains("109")) {
+        		}else if(fileList[i].getName().contains("F-109")) {
         			fileTargetName = "109";
-        		}else if(fileList[i].getName().contains("110")) {
+        		}else if(fileList[i].getName().contains("F-110")) {
         			fileTargetName = "110";
-        		}else if(fileList[i].getName().contains("111")) {
+        		}else if(fileList[i].getName().contains("F-111")) {
         			fileTargetName = "111";
-        		}else if(fileList[i].getName().contains("112")) {
+        		}else if(fileList[i].getName().contains("F-112")) {
         			fileTargetName = "112";
-        		}else if(fileList[i].getName().contains("113")) {
+        		}else if(fileList[i].getName().contains("F-113")) {
         			fileTargetName = "113";
-        		}else if(fileList[i].getName().contains("114")) {
+        		}else if(fileList[i].getName().contains("F-114")) {
         			fileTargetName = "114";
-        		}else if(fileList[i].getName().contains("115")) {
+        		}else if(fileList[i].getName().contains("F-115")) {
         			fileTargetName = "115";
-        		}else if(fileList[i].getName().contains("116")) {
+        		}else if(fileList[i].getName().contains("F-116")) {
         			fileTargetName = "116";
-        		}else if(fileList[i].getName().contains("117")) {
+        		}else if(fileList[i].getName().contains("F-117")) {
         			fileTargetName = "117";
-        		}else if(fileList[i].getName().contains("118")) {
+        		}else if(fileList[i].getName().contains("F-118")) {
         			fileTargetName = "118";
-        		}else if(fileList[i].getName().contains("119")) {
+        		}else if(fileList[i].getName().contains("F-119")) {
         			fileTargetName = "119";
-        		}else if(fileList[i].getName().contains("120")) {
+        		}else if(fileList[i].getName().contains("F-120")) {
         			fileTargetName = "120";
-        		}else if(fileList[i].getName().contains("201")) {//측면
+        		}else if(fileList[i].getName().contains("S-101")) {//측면
         			fileTargetName = "201";
-        		}else if(fileList[i].getName().contains("202")) {
+        		}else if(fileList[i].getName().contains("S-102")) {
         			fileTargetName = "202";
-        		}else if(fileList[i].getName().contains("203")) {
+        		}else if(fileList[i].getName().contains("S-103")) {
         			fileTargetName = "203";
-        		}else if(fileList[i].getName().contains("204")) {
+        		}else if(fileList[i].getName().contains("S-104")) {
         			fileTargetName = "204";
-        		}else if(fileList[i].getName().contains("205")) {
+        		}else if(fileList[i].getName().contains("S-105")) {
         			fileTargetName = "205";
-        		}else if(fileList[i].getName().contains("206")) {
+        		}else if(fileList[i].getName().contains("S-106")) {
         			fileTargetName = "206";
-        		}else if(fileList[i].getName().contains("207")) {
+        		}else if(fileList[i].getName().contains("S-107")) {
         			fileTargetName = "207";
-        		}else if(fileList[i].getName().contains("208")) {
+        		}else if(fileList[i].getName().contains("S-108")) {
         			fileTargetName = "208";
-        		}else if(fileList[i].getName().contains("209")) {
+        		}else if(fileList[i].getName().contains("S-109")) {
         			fileTargetName = "209";
-        		}else if(fileList[i].getName().contains("210")) {
+        		}else if(fileList[i].getName().contains("S-110")) {
         			fileTargetName = "210";
-        		}else if(fileList[i].getName().contains("211")) {
+        		}else if(fileList[i].getName().contains("S-111")) {
         			fileTargetName = "211";
-        		}else if(fileList[i].getName().contains("212")) {
+        		}else if(fileList[i].getName().contains("S-112")) {
         			fileTargetName = "212";
-        		}else if(fileList[i].getName().contains("213")) {
+        		}else if(fileList[i].getName().contains("S-113")) {
         			fileTargetName = "213";
-        		}else if(fileList[i].getName().contains("214")) {
+        		}else if(fileList[i].getName().contains("S-114")) {
         			fileTargetName = "214";
-        		}else if(fileList[i].getName().contains("215")) {
+        		}else if(fileList[i].getName().contains("S-115")) {
         			fileTargetName = "215";
-        		}else if(fileList[i].getName().contains("216")) {
+        		}else if(fileList[i].getName().contains("S-116")) {
         			fileTargetName = "216";
-        		}else if(fileList[i].getName().contains("217")) {
+        		}else if(fileList[i].getName().contains("S-117")) {
         			fileTargetName = "217";
-        		}else if(fileList[i].getName().contains("218")) {
+        		}else if(fileList[i].getName().contains("S-118")) {
         			fileTargetName = "218";
-        		}else if(fileList[i].getName().contains("219")) {
+        		}else if(fileList[i].getName().contains("S-119")) {
         			fileTargetName = "219";
-        		}else if(fileList[i].getName().contains("220")) {
+        		}else if(fileList[i].getName().contains("S-120")) {
         			fileTargetName = "220";
-        		}else if(fileList[i].getName().contains("403")) {//실사이미지
-        			fileTargetName = "403";
-        		}else if(fileList[i].getName().contains("401")) {//정면위험물품
-        			fileTargetName = "401";
-        		}else if(fileList[i].getName().contains("402")) {//측면위험물품
-        			fileTargetName = "402";
         		}
+        		//}else if(fileList[i].getName().contains("403")) {//실사이미지
+        			//fileTargetName = "403";
+        		//}else if(fileList[i].getName().contains("401")) {//정면위험물품
+        			//fileTargetName = "401";
+        		//}else if(fileList[i].getName().contains("402")) {//측면위험물품
+        			//fileTargetName = "402";
+        		//}
         		
                 // 파일명 변경
     			newFileName = scanId + "-" + fileTargetName + fileExtention;

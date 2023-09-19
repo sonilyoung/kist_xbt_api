@@ -76,7 +76,10 @@ public enum BaseResponseCode {
 	), FAIL(
 	        "fail", "불합격"	        
 	), UNKONWN_ERROR(
-	        "9999", "내부 오류가 발생");			
+	        "9999", "내부 오류가 발생"
+	), UNKONWN_KAIST_ERROR(
+	        "UNKONWN_KAIST_ERROR", "카이스트 내부 오류가 발생"
+	);			
 	
 
 	private String code;

@@ -76,7 +76,7 @@ public class EgovXbtEdcApiController {
 		
 		try {
 			LOGGER.info("=========파링생성 디렉토리의 파일삭제");
-			fileStorageService.fileDeleteAll("F", "S");
+			fileStorageService.fileDeleteAll("F", "S", "target");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");
@@ -95,7 +95,7 @@ public class EgovXbtEdcApiController {
 			//return new BaseResponse<JsonNode>(json);			
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new BaseResponse<Integer>(BaseResponseCode.UPLOAD_FAIL, BaseResponseCode.UPLOAD_FAIL.getMessage());
+			return new BaseResponse<Integer>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage());
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			
 		}
@@ -132,7 +132,7 @@ public class EgovXbtEdcApiController {
 			LearningImg li = new LearningImg();
 			li.setBagScanId(params.getBagScanId());
 			LearningImg result = xbtImageService.selectSudoImgRename(li);
-			fileStorageService.fileDeleteAll("F", "S");
+			fileStorageService.fileDeleteAll("F", "S", "result");
 			//LearningImg result = xbtImageService.selectAdmAllBagImg(li);		
 			return new BaseResponse<LearningImg>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage(), result);
 			
@@ -140,7 +140,7 @@ public class EgovXbtEdcApiController {
 			//return new BaseResponse<JsonNode>(json);			
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new BaseResponse<LearningImg>(BaseResponseCode.UPLOAD_FAIL, BaseResponseCode.UPLOAD_FAIL.getMessage());
+			return new BaseResponse<LearningImg>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage());
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			
 		}

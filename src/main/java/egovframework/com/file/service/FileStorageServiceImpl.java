@@ -61,7 +61,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     public static final String KAIST_XRAY_ROOT_DIR = GlobalsProperties.getProperty("kaist.xray.img.path");    
     
     /*kist xray 결과경로*/
-    public static final String KIST_XRAY_RESULT_DIR = GlobalsProperties.getProperty("kist.xray.result.img.path");            
+    public static final String KAIST_XRAY_RESULT_DIR = GlobalsProperties.getProperty("kaist.xray.result.img.path");            
     
     @PostConstruct
     public void initialize() {
@@ -400,8 +400,8 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 	}
 	
-	public void fileDeleteAll() {
-	    String directoryPath = "경로/디렉토리";  // 삭제할 디렉토리 경로
+	public void fileDeleteAll(String target1, String target2) {
+	    String directoryPath = KAIST_XRAY_RESULT_DIR;  // 삭제할 디렉토리 경로
 
 	    File directory = new File(directoryPath);
 	    File[] files = directory.listFiles();  // 디렉토리 내의 모든 파일을 가져옵니다.
@@ -409,7 +409,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    if (files != null) {
 	        for (File file : files) {
 	            if (file.isFile()) {
-	                file.delete();  // 파일 삭제
+	            	if(file.getName().contains(target1) || file.getName().contains(target2)) {
+	            		file.delete();  // 파일 삭제
+	            	}
 	            }
 	        }
 	    }		

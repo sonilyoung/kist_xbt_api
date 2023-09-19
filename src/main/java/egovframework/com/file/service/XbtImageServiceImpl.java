@@ -3,6 +3,8 @@ package egovframework.com.file.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.stereotype.Service;
 
@@ -87,7 +89,7 @@ public class XbtImageServiceImpl implements XbtImageService {
 	@Override
 	public LearningImg selectAdmAllBagImg(LearningImg params) {
 		// TODO Auto-generated method stub
-    	String xrayPath = GlobalsProperties.getProperty("xray.img.path");
+    	String xrayPath = GlobalsProperties.getProperty("kaist.xray.result.img.path");
 		String scanId = params.getBagScanId();	
         String strDirPath = xrayPath+File.separator+scanId; 
         File[] fileList = null;
@@ -203,6 +205,132 @@ public class XbtImageServiceImpl implements XbtImageService {
 
 
 
+	@Override
+	public LearningImg selectSudoImgRename(LearningImg params) {
+		// TODO Auto-generated method stub
+    	String xrayPath = GlobalsProperties.getProperty("kaist.xray.result.img.path");
+		String scanId = params.getBagScanId();	
+        String strDirPath = xrayPath;
+        String fileExtention = ".png";
+        String fileTargetName = ""; 
+        File[] fileList = null;
+		fileList = FileReader.ListFile( strDirPath );
+			
+        byte[] fileByte = null;/*이미지*/
+        
+        if(fileList==null) {
+        	return params;
+        }   
+        
+        //결과유기물
+        for( int i = 0; i < fileList.length; i++ ) {
+            String newFileName = "";
+        	try {
+        		fileByte = Files.readAllBytes(fileList[i].toPath());
+        		Path file = Paths.get(fileList[i].toPath().toString());
+        		
+        		if(fileList[i].getName().contains("101")) {//정면
+        			fileTargetName = "101";
+        		}else if(fileList[i].getName().contains("102")) {
+        			fileTargetName = "102";
+        		}else if(fileList[i].getName().contains("103")) {
+        			fileTargetName = "103";
+        		}else if(fileList[i].getName().contains("104")) {
+        			fileTargetName = "104";
+        		}else if(fileList[i].getName().contains("105")) {
+        			fileTargetName = "105";
+        		}else if(fileList[i].getName().contains("106")) {
+        			fileTargetName = "106";
+        		}else if(fileList[i].getName().contains("107")) {
+        			fileTargetName = "107";
+        		}else if(fileList[i].getName().contains("108")) {
+        			fileTargetName = "108";
+        		}else if(fileList[i].getName().contains("109")) {
+        			fileTargetName = "109";
+        		}else if(fileList[i].getName().contains("110")) {
+        			fileTargetName = "110";
+        		}else if(fileList[i].getName().contains("111")) {
+        			fileTargetName = "111";
+        		}else if(fileList[i].getName().contains("112")) {
+        			fileTargetName = "112";
+        		}else if(fileList[i].getName().contains("113")) {
+        			fileTargetName = "113";
+        		}else if(fileList[i].getName().contains("114")) {
+        			fileTargetName = "114";
+        		}else if(fileList[i].getName().contains("115")) {
+        			fileTargetName = "115";
+        		}else if(fileList[i].getName().contains("116")) {
+        			fileTargetName = "116";
+        		}else if(fileList[i].getName().contains("117")) {
+        			fileTargetName = "117";
+        		}else if(fileList[i].getName().contains("118")) {
+        			fileTargetName = "118";
+        		}else if(fileList[i].getName().contains("119")) {
+        			fileTargetName = "119";
+        		}else if(fileList[i].getName().contains("120")) {
+        			fileTargetName = "120";
+        		}else if(fileList[i].getName().contains("201")) {//측면
+        			fileTargetName = "201";
+        		}else if(fileList[i].getName().contains("202")) {
+        			fileTargetName = "202";
+        		}else if(fileList[i].getName().contains("203")) {
+        			fileTargetName = "203";
+        		}else if(fileList[i].getName().contains("204")) {
+        			fileTargetName = "204";
+        		}else if(fileList[i].getName().contains("205")) {
+        			fileTargetName = "205";
+        		}else if(fileList[i].getName().contains("206")) {
+        			fileTargetName = "206";
+        		}else if(fileList[i].getName().contains("207")) {
+        			fileTargetName = "207";
+        		}else if(fileList[i].getName().contains("208")) {
+        			fileTargetName = "208";
+        		}else if(fileList[i].getName().contains("209")) {
+        			fileTargetName = "209";
+        		}else if(fileList[i].getName().contains("210")) {
+        			fileTargetName = "210";
+        		}else if(fileList[i].getName().contains("211")) {
+        			fileTargetName = "211";
+        		}else if(fileList[i].getName().contains("212")) {
+        			fileTargetName = "212";
+        		}else if(fileList[i].getName().contains("213")) {
+        			fileTargetName = "213";
+        		}else if(fileList[i].getName().contains("214")) {
+        			fileTargetName = "214";
+        		}else if(fileList[i].getName().contains("215")) {
+        			fileTargetName = "215";
+        		}else if(fileList[i].getName().contains("216")) {
+        			fileTargetName = "216";
+        		}else if(fileList[i].getName().contains("217")) {
+        			fileTargetName = "217";
+        		}else if(fileList[i].getName().contains("218")) {
+        			fileTargetName = "218";
+        		}else if(fileList[i].getName().contains("219")) {
+        			fileTargetName = "219";
+        		}else if(fileList[i].getName().contains("220")) {
+        			fileTargetName = "220";
+        		}else if(fileList[i].getName().contains("403")) {//실사이미지
+        			fileTargetName = "403";
+        		}else if(fileList[i].getName().contains("401")) {//정면위험물품
+        			fileTargetName = "401";
+        		}else if(fileList[i].getName().contains("402")) {//측면위험물품
+        			fileTargetName = "402";
+        		}
+        		
+                // 파일명 변경
+    			newFileName = scanId + "-" + fileTargetName + fileExtention;
+                Path renamedFile = file.resolveSibling(newFileName);
+                // 변경된 파일 저장
+                Files.write(renamedFile, fileByte);        		
+        		
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+		return params;
+	}	
 		
 	
 

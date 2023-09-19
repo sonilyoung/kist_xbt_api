@@ -21,6 +21,8 @@ import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.api.login.service.ApiLoginService;
 import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.file.service.FileStorageService;
+import egovframework.com.file.service.XbtImageService;
+import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.annotation.SkipAuth;
 import egovframework.com.global.authorization.SkipAuthLevel;
 import egovframework.com.global.http.BaseResponse;
@@ -52,11 +54,14 @@ public class EgovXbtEdcApiController {
 	
     @Autowired
     private FileStorageService fileStorageService;
+    
+    @Autowired
+    private XbtImageService xbtImageService;
 	
 	@ResponseBody
-	@RequestMapping(value = {"/transImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@RequestMapping(value = {"/transKaistImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
-	public BaseResponse<Integer> transImages(HttpServletRequest request, HttpServletResponse response, @RequestBody XrayImgContents params) throws Exception {
+	public BaseResponse<Integer> transKaistImages(HttpServletRequest request, HttpServletResponse response, @RequestBody XrayImgContents params) throws Exception {
 		
         ApiLogin login = apiLoginService.getLoginInfo(request);
         LOGGER.info("login : " + login);
@@ -71,7 +76,7 @@ public class EgovXbtEdcApiController {
 		
 		try {
 			LOGGER.info("=========파링생성 디렉토리의 파일삭제");
-			fileStorageService.fileDeleteAll();
+			fileStorageService.fileDeleteAll("F", "S");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");
@@ -107,6 +112,40 @@ public class EgovXbtEdcApiController {
 	}	
 	
 	
+	@ResponseBody
+	@RequestMapping(value = {"/selectKaistSudoImg.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<LearningImg> selectKaistSudoImg(HttpServletRequest request, HttpServletResponse response, @RequestBody LearningImg params) throws Exception {
+		
+        ApiLogin login = apiLoginService.getLoginInfo(request);
+        LOGGER.info("login : " + login);
+		if (login == null) {
+			throw new BaseException(BaseResponseCode.AUTH_FAIL);
+		}
+		
+		LOGGER.info("params : " + params);
+		
+		//JsonNode json = null;
+		//ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			LearningImg li = new LearningImg();
+			li.setBagScanId(params.getBagScanId());
+			LearningImg result = xbtImageService.selectSudoImgRename(li);
+			fileStorageService.fileDeleteAll("F", "S");
+			//LearningImg result = xbtImageService.selectAdmAllBagImg(li);		
+			return new BaseResponse<LearningImg>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage(), result);
+			
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<LearningImg>(BaseResponseCode.UPLOAD_FAIL, BaseResponseCode.UPLOAD_FAIL.getMessage());
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}
+
+	}	
 	
 	
 	

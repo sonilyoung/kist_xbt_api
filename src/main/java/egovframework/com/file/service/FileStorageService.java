@@ -37,6 +37,6 @@ public interface FileStorageService {
     
     void ByteToFile(byte[] target, String params)throws Exception;
     
-    public void fileDeleteAll()throws Exception;
+    public void fileDeleteAll(String target1, String target2)throws Exception;
 
 }

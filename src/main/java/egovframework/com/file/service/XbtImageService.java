@@ -22,7 +22,9 @@ import egovframework.com.file.vo.LearningImg;
 public interface XbtImageService {
 	
 	
-	public LearningImg selectAdmAllBagImg(LearningImg params);	
+	public LearningImg selectAdmAllBagImg(LearningImg params);
+	
+	public LearningImg selectSudoImgRename(LearningImg params);	
 	
 	
 }

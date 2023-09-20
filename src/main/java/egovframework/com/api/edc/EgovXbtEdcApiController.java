@@ -131,10 +131,16 @@ public class EgovXbtEdcApiController {
 		try {
 			LearningImg li = new LearningImg();
 			li.setBagScanId(params.getBagScanId());
-			LearningImg result = xbtImageService.selectSudoImgRename(li);
+			
+			//파일리네임
+			xbtImageService.selectSudoImgRename(li);
+			
+			//파일이미지가져오기
+			LearningImg result = xbtImageService.selectAdmAllBagImg(li);
+			
 			fileStorageService.fileDeleteAll("F", "S", "result");
 			//LearningImg result = xbtImageService.selectAdmAllBagImg(li);		
-			return new BaseResponse<LearningImg>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage(), result);
+			return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
 			
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			

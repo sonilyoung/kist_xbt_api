@@ -90,8 +90,9 @@ public class XbtImageServiceImpl implements XbtImageService {
 	public LearningImg selectAdmAllBagImg(LearningImg params) {
 		// TODO Auto-generated method stub
     	String xrayPath = GlobalsProperties.getProperty("kaist.xray.result.img.path");
-		String scanId = params.getBagScanId();	
-        String strDirPath = xrayPath+File.separator+scanId; 
+		String scanId = params.getBagScanId();
+		params.setBagScanId(scanId);
+        String strDirPath = xrayPath; 
         File[] fileList = null;
 		fileList = FileReader.ListFile( strDirPath );
 			
@@ -104,7 +105,13 @@ public class XbtImageServiceImpl implements XbtImageService {
         //결과유기물
         for( int i = 0; i < fileList.length; i++ ) { 
         	try {
+        		
+        		if(fileList[i].getName().contains("checkpoints")){
+        			continue;
+        		}
+        		
         		fileByte = Files.readAllBytes(fileList[i].toPath());
+        		
         		if(fileList[i].getName().contains("101")) {//정면
         			params.setImgFront(fileByte);
         			params.setImgFrontColor(fileByte);
@@ -226,6 +233,11 @@ public class XbtImageServiceImpl implements XbtImageService {
         for( int i = 0; i < fileList.length; i++ ) {
             String newFileName = "";
         	try {
+        		
+        		if(fileList[i].getName().contains("checkpoints")){
+        			continue;
+        		}        		
+        		
         		fileByte = Files.readAllBytes(fileList[i].toPath());
         		Path file = Paths.get(fileList[i].toPath().toString());
         		

@@ -1,4 +1,4 @@
-package egovframework.com.api.edc;
+package egovframework.com.api.edc.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,13 +10,13 @@ public class CommandExcutor {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommandExcutor.class);
 	
-    public String excutor() {
+    public String excutor(String command) throws Exception{
             // 실행할 쉘 명령어
         	// ProcessBuilder에 넣어줄 커맨드 준비
         	
         try {
             // 실행할 쉘 명령어
-            String command = "ls -l";
+            //String command = "ls -l";
 
             // 프로세스 빌더 생성
             ProcessBuilder processBuilder = new ProcessBuilder();
@@ -24,6 +24,7 @@ public class CommandExcutor {
             LOGGER.info("=============CommandExcutor1=============");
             // 리눅스 쉘 명령어 실행
             processBuilder.command("sh", "-c", command);
+            //processBuilder.command(command);
 
             LOGGER.info("=============CommandExcutor2=============");
             

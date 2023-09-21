@@ -58,10 +58,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     public static final String FILE_DB_UPLOAD_PATH = GlobalsProperties.getProperty("file.db.upload.path");
     
     /*kaist xray 저장경로*/
-    public static final String KAIST_XRAY_ROOT_DIR = GlobalsProperties.getProperty("kaist.xray.img.path");    
+    public static final String KAIST_SUDO_ROOT_DIR = GlobalsProperties.getProperty("kaist.sudo.img.path");    
     
     /*kist xray 결과경로*/
-    public static final String KAIST_XRAY_RESULT_DIR = GlobalsProperties.getProperty("kaist.xray.result.img.path");            
+    public static final String KAIST_SUDO_RESULT_DIR = GlobalsProperties.getProperty("kaist.sudo.result.img.path");            
     
     @PostConstruct
     public void initialize() {
@@ -342,7 +342,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         //String fileExtension = StringUtils.getFilenameExtension(originalFileName);
         String fileExtension = "jpg";
         
-        String filePath = KAIST_XRAY_ROOT_DIR;
+        String filePath = KAIST_SUDO_ROOT_DIR;
         
         File fileDir = new File(filePath);
         // root directory 없으면 생성
@@ -380,7 +380,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	}	
 
 	public void ByteToFile(byte[] target, String params) {
-        String savePath = KAIST_XRAY_ROOT_DIR; // 저장할 파일 경로 및 이름
+        String savePath = KAIST_SUDO_ROOT_DIR; // 저장할 파일 경로 및 이름
         String targetFile = params;
         File fileDir = new File(savePath);
         // root directory 없으면 생성
@@ -404,9 +404,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    String directoryPath = "";
 	    
 	    if("target".equals(op)) {
-	    	directoryPath = KAIST_XRAY_ROOT_DIR;  // 삭제할 디렉토리 경로
+	    	directoryPath = KAIST_SUDO_ROOT_DIR;  // 삭제할 디렉토리 경로
 	    }else {
-	    	directoryPath = KAIST_XRAY_RESULT_DIR;  // 삭제할 디렉토리 경로
+	    	directoryPath = KAIST_SUDO_RESULT_DIR;  // 삭제할 디렉토리 경로
 	    }
 
 	    File directory = new File(directoryPath);

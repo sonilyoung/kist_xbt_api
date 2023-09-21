@@ -17,6 +17,8 @@ import egovframework.com.api.edc.service.EgovXtsEdcApiService;
 import egovframework.com.api.edc.service.EgovXtsEdcPseudoFilterService;
 import egovframework.com.api.edc.service.EgovXtsEdcReinforcementService;
 import egovframework.com.api.edc.service.EgovXtsEdcThreeDimensionService;
+import egovframework.com.api.edc.utils.CommandExcutor;
+import egovframework.com.api.edc.vo.CommandExcute;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.api.login.service.ApiLoginService;
 import egovframework.com.api.login.vo.ApiLogin;
@@ -58,6 +60,13 @@ public class EgovXbtEdcApiController {
     @Autowired
     private XbtImageService xbtImageService;
 	
+    
+    /**
+     * kaist 슈도이미지 업로드
+     * 
+     * @param param
+     * @return Company
+     */	    
 	@ResponseBody
 	@RequestMapping(value = {"/transKaistImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
@@ -111,7 +120,51 @@ public class EgovXbtEdcApiController {
 		
 	}	
 	
+    /**
+     * kaist 슈도이미지 명렁어실행
+     * 
+     * @param param
+     * @return Company
+     */		
+	@ResponseBody
+	@RequestMapping(value = {"/commandKaistExcute.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<String> commandExcute(
+	    HttpServletRequest request, HttpServletResponse response,
+	    @RequestBody CommandExcute params){
+	    ApiLogin login = apiLoginService.getLoginInfo(request);
+	    LOGGER.info("login : " + login);
+	    if (login == null) {
+	        throw new BaseException(BaseResponseCode.AUTH_FAIL);
+	    }
+	      
+	    try {
+	        CommandExcutor ce = new CommandExcutor();
+	        LOGGER.info("params : " + params);
+	        
+	        String result = "";
+			if(!StringUtils.isEmpty(params.getCommand())){
+				for(String c : params.getCommand()) {
+					
+					LOGGER.info("명령어 실행 ==========> " + c);
+					result = ce.excutor(c);	
+				}
+			}	
+			
+	        return new BaseResponse<String>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        return new BaseResponse<String>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage(), e.getMessage());
+	    }
+	}
+		
 	
+    /**
+     * kaist 슈도이미지 가져오기
+     * 
+     * @param param
+     * @return Company
+     */	
 	@ResponseBody
 	@RequestMapping(value = {"/selectKaistSudoImg.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)

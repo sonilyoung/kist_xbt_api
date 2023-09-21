@@ -43,7 +43,7 @@ public class BaseResponse<T> {
         this.ret_desc = message;
         this.ret_data = ret_data;
     }    
-
+    
     public T getRet_data() {
         return ret_data;
     }

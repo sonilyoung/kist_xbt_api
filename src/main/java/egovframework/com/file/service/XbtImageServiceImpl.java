@@ -1,13 +1,19 @@
 package egovframework.com.file.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import egovframework.com.api.edc.vo.ThreedGeneration;
+import egovframework.com.api.edc.vo.TowdGeneration;
 import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.util.FileReader;
@@ -84,14 +90,19 @@ public class XbtImageServiceImpl implements XbtImageService {
 	*/
 	
 
-
+    /*kist xray 결과경로*/
+    public static final String KAIST_SUDO_RESULT_DIR = GlobalsProperties.getProperty("kaist.sudo.result.img.path");
+    
+    /*kist 2D 결과경로*/
+    public static final String KAIST_TWOD_RESULT_DIR = GlobalsProperties.getProperty("kaist.twod.result.img.path");   
+    
+    /*kist 3D 결과경로*/
+    public static final String KAIST_THREED_RESULT_DIR = GlobalsProperties.getProperty("kaist.threed.result.img.path");      
 
 	@Override
-	public LearningImg selectAdmAllBagImg(LearningImg params) {
+	public LearningImg selectAdmAllBagImg(LearningImg params) throws Exception {
 		// TODO Auto-generated method stub
-    	String xrayPath = GlobalsProperties.getProperty("kaist.xray.result.img.path");
-		String scanId = params.getBagScanId();
-		params.setBagScanId(scanId);
+    	String xrayPath = KAIST_SUDO_RESULT_DIR;
         String strDirPath = xrayPath; 
         File[] fileList = null;
 		fileList = FileReader.ListFile( strDirPath );
@@ -213,9 +224,9 @@ public class XbtImageServiceImpl implements XbtImageService {
 
 
 	@Override
-	public LearningImg selectSudoImgRename(LearningImg params) {
+	public LearningImg selectSudoImgRename(LearningImg params) throws Exception {
 		// TODO Auto-generated method stub
-    	String xrayPath = GlobalsProperties.getProperty("kaist.xray.result.img.path");
+    	String xrayPath = KAIST_SUDO_RESULT_DIR;
 		String scanId = params.getBagScanId();	
         String strDirPath = xrayPath;
         String fileExtention = ".png";
@@ -346,5 +357,103 @@ public class XbtImageServiceImpl implements XbtImageService {
 	}	
 		
 	
+	
+	@Override
+	public TowdGeneration selectTowdImg(TowdGeneration params) throws Exception {
+		// TODO Auto-generated method stub
+    	String xrayPath = KAIST_TWOD_RESULT_DIR;
+        String strDirPath = xrayPath; 
+        File[] fileList = null;
+		fileList = FileReader.ListFile( strDirPath );
+		
+		List<String> fileNameList = new ArrayList<String>();
+		List<byte[]> towdGenList = new ArrayList<byte[]>();
+        byte[] fileByte = null;/*이미지*/
+        
+        if(fileList==null) {
+        	return params;
+        }   
+        
+        //결과유기물
+        for( int i = 0; i < fileList.length; i++ ) { 
+        	try {
+        		
+        		if(fileList[i].getName().contains("output_generated_imag_old")){
+        			continue;
+        		}
+        		fileByte = Files.readAllBytes(fileList[i].toPath());
+        		fileNameList.add(fileList[i].getName()); 
+        		towdGenList.add(fileByte);
+        
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+        params.setFileNameList(fileNameList);
+        params.setTowdGenList(towdGenList);
+        
+		return params;
+	}	
+	
+	
+	
+	@Override
+	public ThreedGeneration selectThreedImg(ThreedGeneration params) throws Exception {
+		// TODO Auto-generated method stub
+    	String xrayPath = KAIST_THREED_RESULT_DIR;
+        String strDirPath = xrayPath;
+       
+        //output_H.gif
+        //output_L.gif        
+        File outputh = new File(strDirPath + File.separator + "output_H.gif");
+        FileInputStream fis = new FileInputStream(outputh);
+        byte[] outputhBytes = new byte[(int) outputh.length()];
+        fis.read(outputhBytes);
+        fis.close();
+        params.setOutputh(outputhBytes);
+        
+        /*
+        File outputl = new File(strDirPath + File.pathSeparator + "output_L.gif");
+        fis = new FileInputStream(outputl);
+        byte[] outputlBytes = new byte[(int) outputh.length()];
+        fis.read(outputlBytes);
+        fis.close();
+        */
+        
+        //output_H_png
+        //output_L_png
+        
+        //12도씩처리
+        File[] fileList = null;
+		fileList = FileReader.ListFile( strDirPath + File.separator +  "output_H_png");
+		
+		List<String> fileNameList = new ArrayList<String>();
+		List<byte[]> towdGenList = new ArrayList<byte[]>();
+        byte[] fileByte = null;/*이미지*/
+        
+        if(fileList==null) {
+        	return params;
+        }   
+        
+        for( int i = 0; i < fileList.length; i++ ) { 
+        	try {
+        		if (i % 6 == 0) {
+            		fileByte = Files.readAllBytes(fileList[i].toPath());
+            		fileNameList.add(fileList[i].getName()); 
+            		towdGenList.add(fileByte);        			
+        		}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+        params.setFileNameList(fileNameList);
+        params.setThreedGenList(towdGenList);
+        
+		return params;
+	}		
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
+import egovframework.com.file.vo.LearningImg;
 
 
 /**
@@ -35,7 +36,7 @@ public interface FileStorageService {
     
     void getImage(String filePath, HttpServletResponse response) throws Exception;
     
-    void ByteToFile(byte[] target, String params)throws Exception;
+    void ByteToFile(byte[] target, String fileName, String filePath, LearningImg params)throws Exception;
     
     public void fileDeleteAll(String target1, String target2, String option)throws Exception;
 

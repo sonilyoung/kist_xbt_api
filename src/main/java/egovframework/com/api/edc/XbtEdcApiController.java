@@ -18,8 +18,8 @@ import egovframework.com.api.edc.service.EgovXtsEdcPseudoFilterService;
 import egovframework.com.api.edc.service.EgovXtsEdcReinforcementService;
 import egovframework.com.api.edc.service.EgovXtsEdcThreeDimensionService;
 import egovframework.com.api.edc.utils.CommandExcutor;
-import egovframework.com.api.edc.vo.CommandExcute;
-import egovframework.com.api.edc.vo.XrayImgContents;
+import egovframework.com.api.edc.vo.ThreedGeneration;
+import egovframework.com.api.edc.vo.TowdGeneration;
 import egovframework.com.api.login.service.ApiLoginService;
 import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.file.service.FileStorageService;
@@ -35,9 +35,9 @@ import io.swagger.annotations.Api;
 @Controller
 @RequestMapping("/kaist/api")
 @Api(tags = "XBT external API")
-public class EgovXbtEdcApiController {
+public class XbtEdcApiController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(EgovXbtEdcApiController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XbtEdcApiController.class);
 	
 	@Autowired
 	private EgovXtsEdcPseudoFilterService egovXtsEdcPseudoFilterService;
@@ -70,7 +70,8 @@ public class EgovXbtEdcApiController {
 	@ResponseBody
 	@RequestMapping(value = {"/transKaistImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
-	public BaseResponse<Integer> transKaistImages(HttpServletRequest request, HttpServletResponse response, @RequestBody XrayImgContents params) throws Exception {
+	public BaseResponse<Integer> transKaistImages(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody LearningImg params) throws Exception {
 		
         ApiLogin login = apiLoginService.getLoginInfo(request);
         LOGGER.info("login : " + login);
@@ -85,17 +86,17 @@ public class EgovXbtEdcApiController {
 		
 		try {
 			LOGGER.info("=========파링생성 디렉토리의 파일삭제");
-			fileStorageService.fileDeleteAll("F", "S", "target");
+			fileStorageService.fileDeleteAll("F", "S", "sudo");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");
 			if(!StringUtils.isEmpty(params.getImgFront())){
-				fileStorageService.ByteToFile(params.getImgFront(), params.getImgFrontName());
+				fileStorageService.ByteToFile(params.getImgFront(), params.getImgFrontName(), "sudo", params);
 			}
 			
 			LOGGER.info("=========측면이미지 업로드");
 			if(!StringUtils.isEmpty(params.getImgSide())){
-				fileStorageService.ByteToFile(params.getImgSide(), params.getImgSideName());
+				fileStorageService.ByteToFile(params.getImgSide(), params.getImgSideName(), "sudo", params);
 			}		
 			
 			return new BaseResponse<Integer>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage());
@@ -131,7 +132,7 @@ public class EgovXbtEdcApiController {
 	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
 	public BaseResponse<String> commandExcute(
 	    HttpServletRequest request, HttpServletResponse response,
-	    @RequestBody CommandExcute params){
+	    @RequestBody LearningImg params){
 	    ApiLogin login = apiLoginService.getLoginInfo(request);
 	    LOGGER.info("login : " + login);
 	    if (login == null) {
@@ -143,8 +144,8 @@ public class EgovXbtEdcApiController {
 	        LOGGER.info("params : " + params);
 	        
 	        String result = "";
-			if(!StringUtils.isEmpty(params.getCommand())){
-				for(String c : params.getCommand()) {
+			if(!StringUtils.isEmpty(params.getKaistCommand())){
+				for(String c : params.getKaistCommand()) {
 					
 					LOGGER.info("명령어 실행 ==========> " + c);
 					result = ce.excutor(c);	
@@ -189,10 +190,11 @@ public class EgovXbtEdcApiController {
 			xbtImageService.selectSudoImgRename(li);
 			
 			//파일이미지가져오기
+			LOGGER.info("params : " + params);
 			LearningImg result = xbtImageService.selectAdmAllBagImg(li);
 			
-			fileStorageService.fileDeleteAll("F", "S", "result");
-			//LearningImg result = xbtImageService.selectAdmAllBagImg(li);		
+			//파일삭제
+			fileStorageService.fileDeleteAll("F", "S", "sudo_result");
 			return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
 			
 			//json = mapper.convertValue(result, JsonNode.class);
@@ -208,12 +210,148 @@ public class EgovXbtEdcApiController {
 	
 	
 	
+    /**
+     * kaist 2d이미지합성 가져오기
+     * 
+     * @param param
+     * @return Company
+     */	
+	@ResponseBody
+	@RequestMapping(value = {"/selectKaistTowdImg.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<TowdGeneration> selectKaistTowdImg(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody TowdGeneration params) throws Exception {
+		
+        ApiLogin login = apiLoginService.getLoginInfo(request);
+        LOGGER.info("login : " + login);
+		if (login == null) {
+			throw new BaseException(BaseResponseCode.AUTH_FAIL);
+		}
+		
+		LOGGER.info("kaist 2d이미지합성 가져오기 : " + params);
+		
+		try {
+			
+			//파일이미지가져오기
+			LOGGER.info("params : " + params);
+			TowdGeneration result = xbtImageService.selectTowdImg(params);
+			
+			//파일삭제
+			fileStorageService.fileDeleteAll("sample", "", "twod_result");
+			return new BaseResponse<TowdGeneration>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
+			
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<TowdGeneration>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage());
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}
+
+	}		
 	
 	
+    /**
+     * kaist 3D 이미지 업로드
+     * 
+     * @param param
+     * @return Company
+     */	    
+	@ResponseBody
+	@RequestMapping(value = {"/transKaistThreedImages.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<Integer> transKaistThreedImages(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody LearningImg params) throws Exception {
+		
+        ApiLogin login = apiLoginService.getLoginInfo(request);
+        LOGGER.info("login : " + login);
+		if (login == null) {
+			throw new BaseException(BaseResponseCode.AUTH_FAIL);
+		}
+		
+		LOGGER.info("kaist 3D 이미지 업로드 시작");
+		
+		//JsonNode json = null;
+		//ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			//LOGGER.info("=========파링생성 디렉토리의 파일삭제");
+			//fileStorageService.fileDeleteAll("F", "S", "threed");
+			
+			
+			LOGGER.info("=========정면이미지 업로드");
+			if(!StringUtils.isEmpty(params.getImgFront())){
+				fileStorageService.ByteToFile(params.getImgFront(), params.getImgFrontName(), "threed", params);
+			}
+			
+			LOGGER.info("=========측면이미지 업로드");
+			if(!StringUtils.isEmpty(params.getImgSide())){
+				fileStorageService.ByteToFile(params.getImgSide(), params.getImgSideName(), "threed", params);
+			}		
+			
+			return new BaseResponse<Integer>(BaseResponseCode.UPLOAD_SUCCESS, BaseResponseCode.UPLOAD_SUCCESS.getMessage());
+			
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<Integer>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage());
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}
+
+		/*
+		 * 
+		 * long testTime = System.currentTimeMillis(); JsonNode jsonNode = null;
+		 * HashMap<String, Object> hash = new HashMap<String, Object>();//리턴 객체 생성
+		 * ObjectMapper mapper = new ObjectMapper(); try {
+		 * 
+		 * } catch(Exception e) { e.printStackTrace(); }
+		 */
+		
+	}	
 	
 	
-	
-	
-	
+    /**
+     * kaist 3d이미지합성 가져오기
+     * 
+     * @param param
+     * @return Company
+     */	
+	@ResponseBody
+	@RequestMapping(value = {"/selectKaistThreedImg.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<ThreedGeneration> selectKaistThreedImg(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody ThreedGeneration params) throws Exception {
+		
+        ApiLogin login = apiLoginService.getLoginInfo(request);
+        LOGGER.info("login : " + login);
+		if (login == null) {
+			throw new BaseException(BaseResponseCode.AUTH_FAIL);
+		}
+		
+		LOGGER.info("kaist 3d이미지합성 가져오기 : " + params);
+		
+		try {
+			
+			//파일이미지가져오기
+			ThreedGeneration result = xbtImageService.selectThreedImg(params);
+			
+			//파일삭제
+			//fileStorageService.fileDeleteAll("input", "output", "threed_result");
+			return new BaseResponse<ThreedGeneration>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
+			
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<ThreedGeneration>(BaseResponseCode.UNKONWN_KAIST_ERROR, BaseResponseCode.UNKONWN_KAIST_ERROR.getMessage());
+			//json = mapper.convertValue(result, JsonNode.class);
+			//return new BaseResponse<JsonNode>(json);			
+		}
+
+	}		
+		
 	
 }

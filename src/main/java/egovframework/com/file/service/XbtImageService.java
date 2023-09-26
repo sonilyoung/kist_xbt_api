@@ -1,8 +1,7 @@
 package egovframework.com.file.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import egovframework.com.api.login.vo.ApiLogin;
+import egovframework.com.api.edc.vo.ThreedGeneration;
+import egovframework.com.api.edc.vo.TowdGeneration;
 import egovframework.com.file.vo.LearningImg;
 
 /**
@@ -25,8 +24,12 @@ import egovframework.com.file.vo.LearningImg;
 public interface XbtImageService {
 	
 	
-	public LearningImg selectAdmAllBagImg(LearningImg params);
+	public LearningImg selectAdmAllBagImg(LearningImg params) throws Exception;
 	
-	public LearningImg selectSudoImgRename(LearningImg params);	
+	public LearningImg selectSudoImgRename(LearningImg params) throws Exception;
+	
+	public TowdGeneration selectTowdImg(TowdGeneration params) throws Exception;
+	
+	public ThreedGeneration selectThreedImg(ThreedGeneration params) throws Exception;
 	
 }

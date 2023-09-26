@@ -28,18 +28,18 @@ import okhttp3.Response;
 
 
 @Service("sudoImgServiceImpl")
-public class SudoImgServiceImpl implements SudoImgService {
+public class XbtEdcApiServiceImpl implements XbtEdcApiService {
 	
     /*카이스트api*/
     public static final String url = GlobalsProperties.getProperty("xbp.api");
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SudoImgServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XbtEdcApiServiceImpl.class);
 
 	@Autowired
 	private FileStorageService fileStorageService;    
 	
     /*kaist xray 저장경로*/
-    public static final String KAIST_XRAY_RESULT_IMG_PATH = GlobalsProperties.getProperty("kaist.xray.result.img.path");	
+    public static final String KAIST_SUDO_RESULT_IMG_PATH = GlobalsProperties.getProperty("kaist.sudo.result.img.path");	
 	
 
 	@Override
@@ -53,10 +53,10 @@ public class SudoImgServiceImpl implements SudoImgService {
 		OkHttpClient client = new OkHttpClient().newBuilder().readTimeout(1, TimeUnit.HOURS).build();
 		
 		// 이미지 파일을 읽고, Base64로 인코딩하여 JSON 데이터에 포함시킴
-		File imageFile1 = new File(KAIST_XRAY_RESULT_IMG_PATH+File.separator+oj.getBagScanId()+File.separator+af1.getSaveFileName());
+		File imageFile1 = new File(KAIST_SUDO_RESULT_IMG_PATH+File.separator+oj.getBagScanId()+File.separator+af1.getSaveFileName());
 		byte[] imageData1 = Files.readAllBytes(imageFile1.toPath());
 		
-		File imageFile2 = new File(KAIST_XRAY_RESULT_IMG_PATH+File.separator+oj.getBagScanId()+File.separator+af2.getSaveFileName());
+		File imageFile2 = new File(KAIST_SUDO_RESULT_IMG_PATH+File.separator+oj.getBagScanId()+File.separator+af2.getSaveFileName());
 		byte[] imageData2 = Files.readAllBytes(imageFile2.toPath());		
 		//String encodedImageData = Base64.getEncoder().encodeToString(imageData);
 

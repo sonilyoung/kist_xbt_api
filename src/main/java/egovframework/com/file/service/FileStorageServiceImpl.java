@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
+import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.http.BaseResponseCode;
 import egovframework.com.global.http.exception.BaseException;
@@ -61,7 +62,16 @@ public class FileStorageServiceImpl implements FileStorageService {
     public static final String KAIST_SUDO_ROOT_DIR = GlobalsProperties.getProperty("kaist.sudo.img.path");    
     
     /*kist xray 결과경로*/
-    public static final String KAIST_SUDO_RESULT_DIR = GlobalsProperties.getProperty("kaist.sudo.result.img.path");            
+    public static final String KAIST_SUDO_RESULT_DIR = GlobalsProperties.getProperty("kaist.sudo.result.img.path");
+    
+    /*kist 2D 결과경로*/
+    public static final String KAIST_TWOD_RESULT_DIR = GlobalsProperties.getProperty("kaist.twod.result.img.path");    
+
+    /*kist 3D 생성경로*/
+    public static final String KAIST_THREED_IMG_PATH = GlobalsProperties.getProperty("kaist.threed.img.path");    
+    
+    /*kist 3D 결과경로*/
+    public static final String KAIST_THREED_RESULT_DIR = GlobalsProperties.getProperty("kaist.threed.result.img.path");   
     
     @PostConstruct
     public void initialize() {
@@ -379,9 +389,16 @@ public class FileStorageServiceImpl implements FileStorageService {
         return attachFile;
 	}	
 
-	public void ByteToFile(byte[] target, String params) {
-        String savePath = KAIST_SUDO_ROOT_DIR; // 저장할 파일 경로 및 이름
-        String targetFile = params;
+	public void ByteToFile(byte[] target, String fileName, String filePath, LearningImg params) {
+        String savePath = ""; // 저장할 파일 경로 및 이름
+        
+	    if("sudo".equals(filePath)) {
+	    	savePath = KAIST_SUDO_ROOT_DIR;  // 슈도컬러생성경로
+	    }else if("threed".equals(filePath)) {
+	    	savePath = KAIST_THREED_IMG_PATH + File.separator + params.getUnitId();  // 3d이미지생성경로
+	    }        
+        
+        String targetFile = fileName;
         File fileDir = new File(savePath);
         // root directory 없으면 생성
     	if (!fileDir.exists()) {
@@ -400,13 +417,17 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 	}
 	
-	public void fileDeleteAll(String target1, String target2, String op) {
+	public void fileDeleteAll(String target1, String target2, String filePath) {
 	    String directoryPath = "";
 	    
-	    if("target".equals(op)) {
-	    	directoryPath = KAIST_SUDO_ROOT_DIR;  // 삭제할 디렉토리 경로
-	    }else {
-	    	directoryPath = KAIST_SUDO_RESULT_DIR;  // 삭제할 디렉토리 경로
+	    if("sudo".equals(filePath)) {
+	    	directoryPath = KAIST_SUDO_ROOT_DIR;  // 슈도이미지 생성경로
+	    }else if("sudo_result".equals(filePath)) {
+	    	directoryPath = KAIST_SUDO_RESULT_DIR;  // 슈도이미지 결과경로
+	    }else if("twod_result".equals(filePath)) {
+	    	directoryPath = KAIST_TWOD_RESULT_DIR;  // 2d이미지 결과경로
+	    }else if("threed_result".equals(filePath)) {
+	    	directoryPath = KAIST_THREED_RESULT_DIR;  // 3d이미지 결과경로
 	    }
 
 	    File directory = new File(directoryPath);

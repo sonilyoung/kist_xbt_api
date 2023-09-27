@@ -428,6 +428,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    	directoryPath = KAIST_TWOD_RESULT_DIR;  // 2d이미지 결과경로
 	    }else if("threed_result".equals(filePath)) {
 	    	directoryPath = KAIST_THREED_RESULT_DIR;  // 3d이미지 결과경로
+	    }else if("threed".equals(filePath)) {
+	    	directoryPath = KAIST_THREED_IMG_PATH;  // 3d이미지 요청경로
 	    }
 
 	    File directory = new File(directoryPath);

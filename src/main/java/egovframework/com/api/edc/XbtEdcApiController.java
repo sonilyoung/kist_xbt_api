@@ -183,6 +183,15 @@ public class XbtEdcApiController {
 		//ObjectMapper mapper = new ObjectMapper();
 		
 		try {
+			
+			
+			
+			
+			//sudo컬러 파일이 생성됬는지 확인
+			if(){
+				/home/jun/project/gwansae-unified/color2multi/color2multi_v1/script/	
+			}
+			
 			LearningImg li = new LearningImg();
 			li.setBagScanId(params.getBagScanId());
 			
@@ -194,7 +203,7 @@ public class XbtEdcApiController {
 			LearningImg result = xbtImageService.selectAdmAllBagImg(li);
 			
 			//파일삭제
-			fileStorageService.fileDeleteAll("F", "S", "sudo_result");
+			fileStorageService.fileDeleteAll("", "", "sudo_result");
 			return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
 			
 			//json = mapper.convertValue(result, JsonNode.class);

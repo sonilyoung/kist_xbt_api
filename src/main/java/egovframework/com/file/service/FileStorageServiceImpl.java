@@ -395,6 +395,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    if("sudo".equals(filePath)) {
 	    	savePath = KAIST_SUDO_ROOT_DIR;  // 슈도컬러생성경로
 	    }else if("threed".equals(filePath)) {
+	    	//savePath = KAIST_THREED_IMG_PATH + File.separator + params.getUnitId();  // 3d이미지생성경로
 	    	savePath = KAIST_THREED_IMG_PATH + File.separator + params.getUnitId();  // 3d이미지생성경로
 	    }        
         
@@ -438,7 +439,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    if (files != null) {
 	        for (File file : files) {
 	            if (file.isFile()) {
-	            	 if("sudo_result".equals(filePath)) {
+	            	 if("threed".equals(filePath) || "sudo".equals(filePath) || "sudo_result".equals(filePath)) {
 			            file.delete();  // 파일 삭제
 	            	 }else {
 	 	            	if(file.getName().contains(target1) || file.getName().contains(target2)) {

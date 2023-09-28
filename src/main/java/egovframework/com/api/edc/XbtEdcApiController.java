@@ -1,5 +1,7 @@
 package egovframework.com.api.edc;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -86,7 +88,7 @@ public class XbtEdcApiController {
 		
 		try {
 			LOGGER.info("=========파링생성 디렉토리의 파일삭제");
-			fileStorageService.fileDeleteAll("F", "S", "sudo");
+			fileStorageService.fileDeleteAll("", "", "sudo");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");
@@ -184,27 +186,25 @@ public class XbtEdcApiController {
 		
 		try {
 			
-			
-			
-			
 			//sudo컬러 파일이 생성됬는지 확인
-			if(){
-				/home/jun/project/gwansae-unified/color2multi/color2multi_v1/script/	
-			}
-			
-			LearningImg li = new LearningImg();
-			li.setBagScanId(params.getBagScanId());
-			
-			//파일리네임
-			xbtImageService.selectSudoImgRename(li);
-			
-			//파일이미지가져오기
-			LOGGER.info("params : " + params);
-			LearningImg result = xbtImageService.selectAdmAllBagImg(li);
-			
-			//파일삭제
-			fileStorageService.fileDeleteAll("", "", "sudo_result");
-			return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);
+			//File fileYn = new File("/home/jun/project/gwansae-unified/color2multi/color/fileY.txt");
+			//if (fileYn.isFile()) {
+				LearningImg li = new LearningImg();
+				li.setBagScanId(params.getBagScanId());
+				
+				//파일리네임
+				xbtImageService.selectSudoImgRename(li);
+				
+				//파일이미지가져오기
+				LOGGER.info("params : " + params);
+				LearningImg result = xbtImageService.selectAdmAllBagImg(li);
+				
+				//파일삭제
+				fileStorageService.fileDeleteAll("", "", "sudo_result");
+				return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);					
+			//}else {
+				//return new BaseResponse<LearningImg>(BaseResponseCode.FILE_CREATE, BaseResponseCode.FILE_CREATE.getMessage());
+			//}
 			
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			
@@ -286,7 +286,7 @@ public class XbtEdcApiController {
 		
 		try {
 			//LOGGER.info("=========파링생성 디렉토리의 파일삭제");
-			fileStorageService.fileDeleteAll("F", "S", "threed");
+			fileStorageService.fileDeleteAll("", "", "threed");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");

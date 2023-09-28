@@ -11,6 +11,8 @@ public enum BaseResponseCode {
 			"0000", "성공"
 	), FAIL(
 			"0001", "실패"			
+	), FILE_CREATE(
+			"FILE_CREATE", "파일생성중"			
 	), SAVE_SUCCESS(
 			"0100", "저장완료"
 	), UPLOAD_SUCCESS(

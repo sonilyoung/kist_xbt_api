@@ -10,8 +10,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import egovframework.com.api.edc.XbtEdcApiController;
 import egovframework.com.api.edc.vo.ThreedGeneration;
 import egovframework.com.api.edc.vo.TowdGeneration;
 import egovframework.com.file.vo.LearningImg;
@@ -41,7 +44,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service("xbtImageService")
 public class XbtImageServiceImpl implements XbtImageService {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(XbtImageServiceImpl.class);
 	/*
 	 * 				//실사이미지 403
 					//정면컬러 101
@@ -112,6 +115,8 @@ public class XbtImageServiceImpl implements XbtImageService {
         if(fileList==null) {
         	return params;
         }   
+        
+        LOGGER.info("selectAdmAllBagImg path: " + xrayPath);
         
         //결과유기물
         for( int i = 0; i < fileList.length; i++ ) { 
@@ -239,6 +244,8 @@ public class XbtImageServiceImpl implements XbtImageService {
         if(fileList==null) {
         	return params;
         }   
+        
+        LOGGER.info("selectSudoImgRename path: " + xrayPath);
         
         //결과유기물
         for( int i = 0; i < fileList.length; i++ ) {
@@ -374,6 +381,9 @@ public class XbtImageServiceImpl implements XbtImageService {
         	return params;
         }   
         
+        
+        LOGGER.info("selectTowdImg path: " + xrayPath);
+        
         //결과유기물
         for( int i = 0; i < fileList.length; i++ ) { 
         	try {
@@ -405,6 +415,8 @@ public class XbtImageServiceImpl implements XbtImageService {
     	String xrayPath = KAIST_THREED_RESULT_DIR;
         String strDirPath = xrayPath;
        
+        LOGGER.info("selectThreedImg path: " + xrayPath);
+        
         //output_H.gif
         //output_L.gif        
         File outputh = new File(strDirPath + File.separator + "output_H.gif");

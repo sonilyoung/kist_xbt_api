@@ -5,7 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +17,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
-import org.junit.experimental.theories.Theory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.api.edc.vo.MpoleBoundingData;
+import egovframework.com.api.edc.vo.MpoleData;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;
@@ -71,7 +77,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     public static final String KAIST_THREED_IMG_PATH = GlobalsProperties.getProperty("kaist.threed.img.path");    
     
     /*kist 3D 결과경로*/
-    public static final String KAIST_THREED_RESULT_DIR = GlobalsProperties.getProperty("kaist.threed.result.img.path");   
+    public static final String KAIST_THREED_RESULT_DIR = GlobalsProperties.getProperty("kaist.threed.result.img.path");
+    
+    /*엠폴 파일업로드 저장경로*/
+    public static final String EMPOLE_FILE_UPLOAD_PATH = GlobalsProperties.getProperty("empole.file.upload.path");    
     
     @PostConstruct
     public void initialize() {
@@ -451,6 +460,84 @@ public class FileStorageServiceImpl implements FileStorageService {
 	        }
 	    }		
 	}
+
+	@Override
+	public JSONObject createMpoleData(MpoleData params) throws Exception {
+		// TODO Auto-generated method stub
+        // Create the JSONObject
+		
+		JSONObject jsonData = new JSONObject();
+		try {
+	        jsonData.put("unitGroupCd", params.getUnitGroupCd());
+	        jsonData.put("unitName", params.getUnitName());
+	        jsonData.put("empoleImg", params.getEmpoleImg());
+	        jsonData.put("fileSize", params.getFileSize());
+	        jsonData.put("fileExtension", params.getFileExtention());
+
+	        // Create the JSONArray for boundingData
+	        JSONArray boundingDataArray = new JSONArray();
+	        for (MpoleBoundingData boundingData : params.getBoundingData()) {
+	            JSONObject boundingDataJson = new JSONObject();
+	            // Set properties of boundingDataJson using boundingData object
+	            boundingDataJson.put("boundingX", boundingData.getBoundingX());
+	            boundingDataJson.put("boundingY", boundingData.getBoundingY());
+	            boundingDataJson.put("boundingWidth", boundingData.getBoundingWidth());
+	            boundingDataJson.put("boundingHeight", boundingData.getBoundingHeight());
+	            boundingDataJson.put("boundingClass", boundingData.getBoundingClass());
+	            boundingDataJson.put("boundingScore", boundingData.getBoundingScore());
+	            boundingDataArray.put(boundingDataJson);
+	        }
+	        jsonData.put("boundingData", boundingDataArray);
+
+	        System.out.println(jsonData.toString());
+	        jsonData.toString();		
+	        return jsonData;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return jsonData;
+		}
+	}
+
+	@Override
+	public boolean createMpoleFile(JSONObject params) throws Exception {
+		// TODO Auto-generated method stub
+		boolean result = true;
+		
+        String filePath = EMPOLE_FILE_UPLOAD_PATH;
+        File fileDir = new File(filePath);
+        // root directory 없으면 생성
+    	if (!fileDir.exists()) {
+    		fileDir.mkdirs(); //폴더 생성합니다.
+    	}   
+    	
+        StringBuilder sb = new StringBuilder();
+        sb.append("mpole-").append(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())).append(".").append("json");
+        String fileName = sb.toString();		
+		
+        try (FileWriter file = new FileWriter(fileDir + File.separator + fileName)) {
+            file.write(params.toString());
+            System.out.println("JSON 객체가 파일에 성공적으로 저장되었습니다.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	
+		/*
+	    try {
+	        // Read the JSON file as a string
+	        String jsonString = new String(Files.readAllBytes(Paths.get("D:/files/output.json")));
+	
+	        // Convert the string to a JSON object
+	        JSONObject jsonObject = new JSONObject(jsonString);
+	
+	        // Use the JSON object as needed
+	        System.out.println("jsonObject:" + jsonObject);
+	
+	        System.out.println("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }*/		
+		
+		return result;
+	}
 
 }

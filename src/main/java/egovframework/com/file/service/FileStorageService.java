@@ -4,8 +4,10 @@ import java.io.File;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.api.edc.vo.MpoleData;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;
@@ -39,5 +41,10 @@ public interface FileStorageService {
     void ByteToFile(byte[] target, String fileName, String filePath, LearningImg params)throws Exception;
     
     public void fileDeleteAll(String target1, String target2, String option)throws Exception;
+    
+    JSONObject createMpoleData(MpoleData params) throws Exception;
+    
+    boolean createMpoleFile(JSONObject params) throws Exception;
+    
 
 }

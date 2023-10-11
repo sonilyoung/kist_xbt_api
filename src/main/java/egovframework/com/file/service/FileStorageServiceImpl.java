@@ -448,7 +448,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    if (files != null) {
 	        for (File file : files) {
 	            if (file.isFile()) {
-	            	 if("threed".equals(filePath) || "sudo".equals(filePath) || "sudo_result".equals(filePath)) {
+	            	 if("threed_result".equals(filePath) || "threed".equals(filePath) || "sudo".equals(filePath) || "sudo_result".equals(filePath)) {
 			            file.delete();  // 파일 삭제
 	            	 }else {
 	 	            	if(file.getName().contains(target1) || file.getName().contains(target2)) {

@@ -287,6 +287,7 @@ public class XbtEdcApiController {
 		try {
 			//LOGGER.info("=========파링생성 디렉토리의 파일삭제");
 			fileStorageService.fileDeleteAll("", "", "threed");
+			fileStorageService.fileDeleteAll("", "", "threed_result");
 			
 			
 			LOGGER.info("=========정면이미지 업로드");

@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -34,6 +37,7 @@ import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.http.BaseResponseCode;
 import egovframework.com.global.http.exception.BaseException;
+import egovframework.com.global.util.FileReader;
 
 /**
  * FileStorageService 구현체로 서블릿 설치 경로에 파일 저장 (※파일 Storage 결정 시까지 임시로 사용)
@@ -503,7 +507,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 		// TODO Auto-generated method stub
 		boolean result = true;
 		
-        String filePath = EMPOLE_FILE_UPLOAD_PATH;
+        String filePath = EMPOLE_FILE_UPLOAD_PATH + File.separator + new SimpleDateFormat("yyyyMMdd").format(new Date());
+        
         File fileDir = new File(filePath);
         // root directory 없으면 생성
     	if (!fileDir.exists()) {
@@ -538,6 +543,58 @@ public class FileStorageServiceImpl implements FileStorageService {
 	    }*/		
 		
 		return result;
+	}
+
+	@Override
+	public List<JSONObject> selectMpoleData(MpoleData params) throws Exception {
+		// TODO Auto-generated method stub
+		String xrayPath = EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate();
+        File[] fileList = FileReader.ListFile( xrayPath );		
+        LOGGER.info("selectMpoleData path: " + xrayPath);
+        List<JSONObject> resultList = new ArrayList<JSONObject>();
+        if(fileList==null) {
+        	return null;
+        }
+        
+        for( int i = 0; i < fileList.length; i++ ) {
+    	    try {
+    	        // Read the JSON file as a string
+    	        String jsonString = new String(Files.readAllBytes(fileList[i].toPath()));
+    	        // Convert the string to a JSON object
+    	        JSONObject jsonObject = new JSONObject(jsonString);
+    	        // Use the JSON object as needed
+    	        //System.out.println("jsonObject:" + jsonObject.get);
+    	        resultList.add(jsonObject);
+    	        
+    	        //byte[] empoleImg = {(byte) jsonObject.get("empoleImg")};
+    	        
+    	        
+    	        
+    	        // 문자열을 바이트 배열로 변환
+    	        //byte[] empoleImg = jsonObject.get("empoleImg").toString().getBytes();
+    	        
+    	        // Base64 디코딩
+    	        
+    	        
+    	        String base64Image = jsonObject.get("empoleImg").toString().substring(jsonString.indexOf("b'") + 2, jsonString.lastIndexOf("'"));
+    	        //byte[] empoleImg = Base64.getDecoder().decode(base64Image);
+    	        byte[] empoleImg = base64Image.getBytes();
+    	        
+    	        
+                File lOutFile = new File(EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate() + "_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())+".png");
+                FileOutputStream outputStream = new FileOutputStream(lOutFile);
+                outputStream.write(empoleImg);
+                outputStream.close();            
+                System.out.println("파일 저장 완료");     	        
+    	        
+    	        
+    	        System.out.println("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	    }          	
+        }
+        
+        return resultList;
 	}
 
 }

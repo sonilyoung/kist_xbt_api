@@ -1,6 +1,7 @@
 package egovframework.com.file.service;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.api.edc.vo.MpoleData;
+import egovframework.com.api.edc.vo.ThreedGeneration;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;
@@ -45,6 +47,8 @@ public interface FileStorageService {
     JSONObject createMpoleData(MpoleData params) throws Exception;
     
     boolean createMpoleFile(JSONObject params) throws Exception;
+    
+    public List<JSONObject> selectMpoleData(MpoleData params) throws Exception;
     
 
 }

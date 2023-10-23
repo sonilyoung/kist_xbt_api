@@ -1,5 +1,7 @@
 package egovframework.com.api.edc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,7 +78,7 @@ public class XbtMpoleApiController {
 		
 		try {
 			
-			LOGGER.info("=========epole start=========");
+			LOGGER.info("=========mploe start=========");
 			LOGGER.info("params : " + params);
 			
 			JSONObject jsonData = fileStorageService.createMpoleData(params);
@@ -84,7 +86,7 @@ public class XbtMpoleApiController {
 			
 			boolean result = fileStorageService.createMpoleFile(jsonData);
 			
-			LOGGER.info("=========epole end=========");
+			LOGGER.info("=========mploe end=========");
 			
 			if(result) {
 				return new BaseResponse<MpoleData>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), params);
@@ -97,4 +99,45 @@ public class XbtMpoleApiController {
 		}
 	}
 
+	
+	
+    /**
+     * mpole데이터 가져오기
+     * 
+     * @param param
+     * @return Integer
+     */	    
+	@ResponseBody
+	@RequestMapping(value = {"/selectMpoleData.do"}, method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@SkipAuth(skipAuthLevel = SkipAuthLevel.SKIP_ALL)
+	public BaseResponse<MpoleData> selectMpoleData(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody MpoleData params) throws Exception {
+		
+        //ApiLogin login = apiLoginService.getLoginInfo(request);
+        //LOGGER.info("login : " + login);
+		//if (login == null) {
+			//throw new BaseException(BaseResponseCode.AUTH_FAIL);
+		//}
+		
+		try {
+			
+			LOGGER.info("=========selet mploe start=========");
+			//LOGGER.info("params : " + params);
+			
+			List<JSONObject> jsonData = fileStorageService.selectMpoleData(params);
+			//LOGGER.info("jsonData : " + jsonData);
+			
+			LOGGER.info("=========selet mploe end=========");
+			
+			if(jsonData != null) {
+				return new BaseResponse<MpoleData>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), params);
+			}else {
+				return new BaseResponse<MpoleData>(BaseResponseCode.FAIL, BaseResponseCode.FAIL.getMessage());	
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new BaseResponse<MpoleData>(BaseResponseCode.FAIL, BaseResponseCode.FAIL.getMessage());
+		}
+	}	
+	
 }

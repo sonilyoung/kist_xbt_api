@@ -11,5 +11,6 @@ public class MpoleData {
 	private String empoleImg;//바이너리이미지
 	private String fileSize;//파일사이즈
 	private String fileExtention;//파일확장자
+	private String targetDate;//일자
 	private List<MpoleBoundingData> boundingData; //물품바운딩데이터
 }

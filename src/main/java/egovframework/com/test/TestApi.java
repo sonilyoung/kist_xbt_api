@@ -2,7 +2,7 @@ package egovframework.com.test;
 
 import lombok.Data;
 
-@Data
+@Data 
 public class TestApi {
 
 	private String unitGroupCd;

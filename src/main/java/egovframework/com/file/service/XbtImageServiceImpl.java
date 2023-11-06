@@ -353,7 +353,7 @@ public class XbtImageServiceImpl implements XbtImageService {
                 Path renamedFile = file.resolveSibling(newFileName);
                 // 변경된 파일 저장
                 Files.write(renamedFile, fileByte);        		
-        		
+                fileList[i].delete();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

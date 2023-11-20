@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -425,7 +426,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             FileOutputStream outputStream = new FileOutputStream(lOutFile);
             outputStream.write(target);
             outputStream.close();            
-            System.out.println("파일 저장 완료");            		
+            LOGGER.info("파일 저장 완료");            		
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -521,7 +522,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 		
         try (FileWriter file = new FileWriter(fileDir + File.separator + fileName)) {
             file.write(params.toString());
-            System.out.println("JSON 객체가 파일에 성공적으로 저장되었습니다.");
+            LOGGER.info("JSON 객체가 파일에 성공적으로 저장되었습니다.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -535,9 +536,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 	        JSONObject jsonObject = new JSONObject(jsonString);
 	
 	        // Use the JSON object as needed
-	        System.out.println("jsonObject:" + jsonObject);
+	        LOGGER.info("jsonObject:" + jsonObject);
 	
-	        System.out.println("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
+	        LOGGER.info("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }*/		
@@ -563,32 +564,42 @@ public class FileStorageServiceImpl implements FileStorageService {
     	        // Convert the string to a JSON object
     	        JSONObject jsonObject = new JSONObject(jsonString);
     	        // Use the JSON object as needed
-    	        //System.out.println("jsonObject:" + jsonObject.get);
+    	        //LOGGER.info("jsonObject:" + jsonObject.get);
     	        resultList.add(jsonObject);
     	        
-    	        //byte[] empoleImg = {(byte) jsonObject.get("empoleImg")};
+    	        // JSON 파싱하여 이미지 데이터 추출
+    	        String targetImg = jsonObject.get("empoleImg").toString();
     	        
-    	        
-    	        
-    	        // 문자열을 바이트 배열로 변환
-    	        //byte[] empoleImg = jsonObject.get("empoleImg").toString().getBytes();
-    	        
+    	        //String empoleImgStr = targetImg.substring(3, targetImg.length() - 1);
+
+    	        // 이스케이프 문자 제거
+    	        //empoleImgStr = empoleImgStr.replace("\\", "");
+
     	        // Base64 디코딩
+    	        byte[] empoleImg = Base64.getDecoder().decode(targetImg);
     	        
+    	        //입력 바이트 배열의 길이가 4의 배수가 아닌 경우 패딩 추가
+    	        /*int paddingLength = 4 - (empoleImg.length % 4);
+    	        if (paddingLength < 4) {
+    	            byte[] paddedEmpoleImg = new byte[empoleImg.length + paddingLength];
+    	            System.arraycopy(empoleImg, 0, paddedEmpoleImg, 0, empoleImg.length);
+    	            empoleImg = paddedEmpoleImg;
+    	        }*/
     	        
-    	        String base64Image = jsonObject.get("empoleImg").toString().substring(jsonString.indexOf("b'") + 2, jsonString.lastIndexOf("'"));
-    	        //byte[] empoleImg = Base64.getDecoder().decode(base64Image);
-    	        byte[] empoleImg = base64Image.getBytes();
-    	        
-    	        
-                File lOutFile = new File(EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate() + "_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())+".png");
+    	        String filePath = EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate();
+    	        File fileDir = new File(filePath);
+    	        // root directory 없으면 생성
+    	    	if (!fileDir.exists()) {
+    	    		fileDir.mkdirs(); //폴더 생성합니다.
+    	    	}   
+    	    	    	        
+    	    	String fileNameWithoutExtension = FilenameUtils.removeExtension(fileList[i].getName());
+                File lOutFile = new File(EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate() + File.separator + fileNameWithoutExtension + ".png");
                 FileOutputStream outputStream = new FileOutputStream(lOutFile);
                 outputStream.write(empoleImg);
                 outputStream.close();            
-                System.out.println("파일 저장 완료");     	        
-    	        
-    	        
-    	        System.out.println("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
+                LOGGER.info("파일 저장 완료");     	        
+    	        LOGGER.info("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
     	    } catch (Exception e) {
     	        e.printStackTrace();
     	    }          	

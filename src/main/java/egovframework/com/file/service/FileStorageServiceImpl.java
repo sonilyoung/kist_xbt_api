@@ -569,6 +569,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     	        
     	        // JSON 파싱하여 이미지 데이터 추출
     	        String targetImg = jsonObject.get("empoleImg").toString();
+    	        String fileExtension = jsonObject.get("fileExtension").toString();
     	        
     	        //String empoleImgStr = targetImg.substring(3, targetImg.length() - 1);
 
@@ -594,7 +595,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     	    	}   
     	    	    	        
     	    	String fileNameWithoutExtension = FilenameUtils.removeExtension(fileList[i].getName());
-                File lOutFile = new File(EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate() + File.separator + fileNameWithoutExtension + ".png");
+                File lOutFile = new File(EMPOLE_FILE_UPLOAD_PATH + File.separator + params.getTargetDate() + File.separator + fileNameWithoutExtension + "." + fileExtension);
                 FileOutputStream outputStream = new FileOutputStream(lOutFile);
                 outputStream.write(empoleImg);
                 outputStream.close();            

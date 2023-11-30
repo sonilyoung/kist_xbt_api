@@ -1,7 +1,5 @@
 package egovframework.com.api.edc;
 
-import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import egovframework.com.api.edc.service.EgovXtsEdcApiService;
-import egovframework.com.api.edc.service.EgovXtsEdcPseudoFilterService;
-import egovframework.com.api.edc.service.EgovXtsEdcReinforcementService;
-import egovframework.com.api.edc.service.EgovXtsEdcThreeDimensionService;
 import egovframework.com.api.edc.utils.CommandExcutor;
 import egovframework.com.api.edc.vo.ThreedGeneration;
 import egovframework.com.api.edc.vo.TowdGeneration;
@@ -40,18 +34,6 @@ import io.swagger.annotations.Api;
 public class XbtEdcApiController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(XbtEdcApiController.class);
-	
-	@Autowired
-	private EgovXtsEdcPseudoFilterService egovXtsEdcPseudoFilterService;
-	
-	@Autowired
-	private EgovXtsEdcThreeDimensionService egovXtsEdcThreeDimensionService;
-	
-	@Autowired
-	private EgovXtsEdcReinforcementService egovXtsEdcReinforcementService;
-	
-	@Autowired
-	private EgovXtsEdcApiService egovXtsEdcApiService;	
 	
 	@Autowired
 	private ApiLoginService apiLoginService;	
@@ -111,15 +93,6 @@ public class XbtEdcApiController {
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			
 		}
-
-		/*
-		 * 
-		 * long testTime = System.currentTimeMillis(); JsonNode jsonNode = null;
-		 * HashMap<String, Object> hash = new HashMap<String, Object>();//리턴 객체 생성
-		 * ObjectMapper mapper = new ObjectMapper(); try {
-		 * 
-		 * } catch(Exception e) { e.printStackTrace(); }
-		 */
 		
 	}	
 	
@@ -181,30 +154,22 @@ public class XbtEdcApiController {
 		
 		LOGGER.info("params : " + params);
 		
-		//JsonNode json = null;
-		//ObjectMapper mapper = new ObjectMapper();
-		
 		try {
 			
 			//sudo컬러 파일이 생성됬는지 확인
-			//File fileYn = new File("/home/jun/project/gwansae-unified/color2multi/color/fileY.txt");
-			//if (fileYn.isFile()) {
-				LearningImg li = new LearningImg();
-				li.setBagScanId(params.getBagScanId());
-				
-				//파일리네임
-				xbtImageService.selectSudoImgRename(li);
-				
-				//파일이미지가져오기
-				LOGGER.info("params : " + params);
-				LearningImg result = xbtImageService.selectAdmAllBagImg(li);
-				
-				//파일삭제
-				fileStorageService.fileDeleteAll("", "", "sudo_result");
-				return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);					
-			//}else {
-				//return new BaseResponse<LearningImg>(BaseResponseCode.FILE_CREATE, BaseResponseCode.FILE_CREATE.getMessage());
-			//}
+			LearningImg li = new LearningImg();
+			li.setBagScanId(params.getBagScanId());
+			
+			//파일리네임
+			xbtImageService.selectSudoImgRename(li);
+			
+			//파일이미지가져오기
+			LOGGER.info("params : " + params);
+			LearningImg result = xbtImageService.selectAdmAllBagImg(li);
+			
+			//파일삭제
+			fileStorageService.fileDeleteAll("", "", "sudo_result");
+			return new BaseResponse<LearningImg>(BaseResponseCode.SUCCESS, BaseResponseCode.SUCCESS.getMessage(), result);					
 			
 			//json = mapper.convertValue(result, JsonNode.class);
 			//return new BaseResponse<JsonNode>(json);			
@@ -311,14 +276,6 @@ public class XbtEdcApiController {
 			//return new BaseResponse<JsonNode>(json);			
 		}
 
-		/*
-		 * 
-		 * long testTime = System.currentTimeMillis(); JsonNode jsonNode = null;
-		 * HashMap<String, Object> hash = new HashMap<String, Object>();//리턴 객체 생성
-		 * ObjectMapper mapper = new ObjectMapper(); try {
-		 * 
-		 * } catch(Exception e) { e.printStackTrace(); }
-		 */
 		
 	}	
 	

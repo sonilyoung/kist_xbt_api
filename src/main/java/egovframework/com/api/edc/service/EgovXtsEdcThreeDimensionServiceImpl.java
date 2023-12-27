@@ -25,6 +25,7 @@ public class EgovXtsEdcThreeDimensionServiceImpl implements EgovXtsEdcThreeDimen
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovXtsEdcThreeDimensionServiceImpl.class);
 
 	@Override
+	@SuppressWarnings("unused")
 	public String threeDimension(Object value) throws Exception {
 		String result = "";
 		ObjectMapper mapper = new ObjectMapper();
@@ -34,7 +35,6 @@ public class EgovXtsEdcThreeDimensionServiceImpl implements EgovXtsEdcThreeDimen
 		Map<String, String> map = mapper.convertValue(value, Map.class);
 		OkHttpClient client = new OkHttpClient().newBuilder()
 				  .build();
-				@SuppressWarnings("unused")
 				MediaType mediaType = MediaType.parse("multipart/form-data");
 				/*.addFormDataPart("IMG_RAW_H", map.get("imgF"))
 				.addFormDataPart("IMG_RAW_L", map.get("imgS"))*/

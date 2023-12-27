@@ -59,6 +59,7 @@ public final class OfficeObjectUtil {
      * @throws IllegalAccessException
      * @throws Exception
      */
+	@SuppressWarnings("deprecation")
 	public static Object instantiate(String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException, Exception {
 		Class<?> clazz;
 

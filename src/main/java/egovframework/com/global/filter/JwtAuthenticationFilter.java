@@ -17,7 +17,6 @@ import egovframework.com.global.exception.CustomBaseException;
 import egovframework.com.global.http.BaseResponseCode;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**

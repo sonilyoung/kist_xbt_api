@@ -1,6 +1,5 @@
 package egovframework.com.api.edc.service;
 
-import java.io.IOException;
 import java.util.Map;
 
 import egovframework.com.api.edc.vo.UnitImages;

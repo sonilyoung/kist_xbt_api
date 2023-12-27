@@ -1,9 +1,5 @@
 package egovframework.com.api.edc.service;
 
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
 import egovframework.com.api.login.vo.ApiLogin;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;

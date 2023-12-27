@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import egovframework.com.api.login.vo.ApiLogin;
-
 /**
  * 사용자IP 체크 인터셉터
  * 
@@ -29,14 +27,14 @@ public class IpObtainInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
-
+    	/*
         String clientIp = request.getRemoteAddr();
 
         ApiLogin Login = null;// (Login) OfficeUserInfoHelper.getAuthenticatedUser();
 
         if (Login != null) {
             //Login.set(clientIp);
-        }
+        }*/
 
         return true;
     }

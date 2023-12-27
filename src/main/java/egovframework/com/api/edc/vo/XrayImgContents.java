@@ -2,7 +2,6 @@ package egovframework.com.api.edc.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import egovframework.com.file.vo.AttachFile;
 import lombok.Data;
 
 @Data

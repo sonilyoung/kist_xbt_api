@@ -2,21 +2,14 @@ package egovframework.com.api.edc.service;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import egovframework.com.api.login.vo.ApiLogin;
-import egovframework.com.file.service.FileStorageService;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.common.GlobalsProperties;
@@ -35,8 +28,8 @@ public class XbtEdcApiServiceImpl implements XbtEdcApiService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(XbtEdcApiServiceImpl.class);
 
-	@Autowired
-	private FileStorageService fileStorageService;    
+	//@Autowired
+	//private FileStorageService fileStorageService;    
 	
     /*kaist xray 저장경로*/
     public static final String KAIST_SUDO_RESULT_IMG_PATH = GlobalsProperties.getProperty("kaist.sudo.result.img.path");	

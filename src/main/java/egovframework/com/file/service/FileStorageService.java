@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.api.edc.vo.MpoleData;
-import egovframework.com.api.edc.vo.ThreedGeneration;
 import egovframework.com.api.edc.vo.XrayImgContents;
 import egovframework.com.file.vo.AttachFile;
 import egovframework.com.file.vo.LearningImg;

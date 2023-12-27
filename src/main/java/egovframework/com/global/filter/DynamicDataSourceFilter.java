@@ -32,6 +32,7 @@ public class DynamicDataSourceFilter implements Filter {
 	}
 
 	@Override
+	@SuppressWarnings("static-access")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest httpRequest = (HttpServletRequest)request;

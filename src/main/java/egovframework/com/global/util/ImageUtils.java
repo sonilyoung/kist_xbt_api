@@ -79,6 +79,7 @@ public class ImageUtils {
 		return "data:image/"+ext+";base64,"+encodedString; 
 	}
 	
+	@SuppressWarnings("unused")
 	public static TextPosition instanceDefaultTextPosition(File imageFile, final String imageText)throws Exception{
 		LOGGER.debug("imageFile : " + imageFile.getAbsolutePath() + ", stampText : " + imageText);
 		BufferedImage bi = null;

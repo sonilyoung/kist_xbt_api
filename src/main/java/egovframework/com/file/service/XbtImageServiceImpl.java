@@ -2,7 +2,6 @@ package egovframework.com.file.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,13 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import egovframework.com.api.edc.XbtEdcApiController;
 import egovframework.com.api.edc.vo.ThreedGeneration;
 import egovframework.com.api.edc.vo.TowdGeneration;
 import egovframework.com.file.vo.LearningImg;
 import egovframework.com.global.common.GlobalsProperties;
 import egovframework.com.global.util.FileReader;
-import lombok.extern.log4j.Log4j2;
 
 
 /**
@@ -41,7 +38,6 @@ import lombok.extern.log4j.Log4j2;
  *		
  *      </pre>
  */
-@Log4j2
 @Service("xbtImageService")
 public class XbtImageServiceImpl implements XbtImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(XbtImageServiceImpl.class);

@@ -39,6 +39,7 @@ public class EgovXtsEdcApiServiceImpl implements EgovXtsEdcApiService {
 
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectEmpUnitImage(UnitImages params) throws Exception {
 		OkHttpClient client = new OkHttpClient().newBuilder()
 				  .build();

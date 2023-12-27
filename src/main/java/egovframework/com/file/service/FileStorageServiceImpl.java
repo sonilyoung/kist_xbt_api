@@ -7,9 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -48,6 +46,7 @@ import egovframework.com.global.util.FileReader;
  * @date : 2022.07.12
  */
 @Service
+@SuppressWarnings("unused")
 public class FileStorageServiceImpl implements FileStorageService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileStorageServiceImpl.class);
@@ -55,7 +54,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Autowired
     private ServletContext servletContext;
 
-    private String realPath;
+	private String realPath;
     
     /*단품 저장경로*/
     public static final String UNIT_ROOT_DIR = GlobalsProperties.getProperty("xray.unitImg.path");    
@@ -249,8 +248,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     	}
     	
     	FileInputStream fis = null;
-    	new FileInputStream(file);
-    	
     	BufferedInputStream in = null;
     	ByteArrayOutputStream bStream = null;
     	try {

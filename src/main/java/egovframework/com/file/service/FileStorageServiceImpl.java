@@ -600,6 +600,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     	        LOGGER.info("JSON 파일을 성공적으로 읽고 JSON 객체로 변환했습니다.");
     	    } catch (Exception e) {
     	        e.printStackTrace();
+    	        resultList = null;
     	    }          	
         }
         
